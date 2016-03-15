@@ -1,61 +1,95 @@
-#+TITLE:  Kritiikki – tietokantasovellus kirja-arvioille
-#+DRAWERS: 
-#+AUTHOR: Tapio Ikkala
-#+OPTIONS: H:5  toc:t  num:t tags:nil
-#+BABEL: :results output :session
-#+LATEX_CMD: xelatex
-#+LATEX_CLASS: memarticle
-#+LATEX_HEADER: \renewcommand{\thesection}{\arabic{section}}
-*** Johdanto
+% Created 2016-03-15 ti 16:49
+\documentclass[11pt,oneside,article]{memoir}
+\input{vc} % vc package
+\usepackage[minted]{org-preamble-xelatex}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\renewcommand{\thesection}{\arabic{section}}
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{Kritiikki – tietokantasovellus kirja-arvioille}
+\author{Tapio Ikkala}
+\date{\today}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+% Org-mode is exporting headings to 5 levels.
+\section{Johdanto}
+\label{sec-1}
+
 Kritiikki-kirja-arviosovelluksen avulla on helppo pitää kirjaa siitä, mitä on lukenut ja antaa samalla kirjasta numeerinen arvosana ja tallentaa muistiin kirjan herättämiä ajatuksia. Sovellukseen on mahdollista lisätä useita käyttäjiä, joten se soveltuu esimerkiksi sellaisen kirjallisudesta kiinnostuneen kaveriporukan käyttöön, joka haluaa keskenään jakaa lukukokemuksiaan. 
 
 Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella tomcatin avulla. Sovellus toteutetaan Javalla ja tietokantakielenä käytetään PostgreSQL:ää.
+\section{Yleiskuva järjestelmästä}
+\label{sec-2}
 
-*** Yleiskuva järjestelmästä
 Järjestelmässä on kaksi käyttäjätyyppiä: tavallinen käyttäjä ja ylläpitäjä. Ne eroavat toisistaan siinä, että ylläpitäjällä on oikeus poistaa muiden käyttäjien tilejä sekä kirjoihin liittyviä tietoja. 
 
 Kaikki käyttäjät voivat lisätä järjestelmään kirjoja sekä antaa niille numeerisia arvosteluja tai kirjoittaa kritiikkejä. Kritiikkeihin on myös mahdollista kirjoittaa kommentteja. Lisäksi järjestelmän avulla on mahdollista tutkia, millaisia kirjoja järjestelmän käyttäjät ovat lukeneet ja miten kirjoja on arvioitu.
 
-#+BEGIN_LATEX
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=1\textwidth]{/home/tapio/kritiikki/doc/käyttötapauskaavio.png}
 \end{center}
 \end{figure}
-#+END_LATEX
+\subsection{Käyttäjäryhmät}
+\label{sec-2-1}
 
-**** Käyttäjäryhmät
-- Tavallinen käyttäjä
+\begin{itemize}
+\item Tavallinen käyttäjä
+\end{itemize}
 Tavallisella käyttäjällä tarkoitetaan kaikkia käyttäjiä, jotka ovat rekisteröityneet palveluun ja joilla ei ole ylläpitäjän oikeuksia.
 
-- Ylläpitäjä
+\begin{itemize}
+\item Ylläpitäjä
+\end{itemize}
 Ylläpitäjä vastaa järjestelmän ylläpidosta. Usealla käyttäjällä voi olla ylläpito-oikeudet. Ylläpitäjä voi tehdä järjestelmässä samat toiminnot kuin muutkin käyttäjät, minkä lisäksi hän pystyy poistamaan käyttäjiä ja muuta tietosisältöä järjestelmästä.
+\subsection{Käyttötapauskuvaukset}
+\label{sec-2-2}
 
-**** Käyttötapauskuvaukset
-- Rekisteröityminen
-
-- Kirjautuminen
-
-- Kirjan lisääminen
+\begin{itemize}
+\item Rekisteröityminen
+\item Kirjautuminen
+\item Kirjan lisääminen
+\end{itemize}
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä syötää kirjan ja kirjalijan nimen, ilmestymismaan, kustantajan, ilmestymisvuoden, sivunumeron sekä genren. Halutessan käyttäjä voi antaa kirjalle myös numeroavosanan asteikolla 4-10 tai kirjoittaa siitä kritiikin.
 
-- Kirjan arviointi
+\begin{itemize}
+\item Kirjan arviointi
+\end{itemize}
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida ja antaa sille numeroarvosanan välillä 4-10.
 
-- Kritiikin kirjoittaminen
-Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arioida. Hän kirjoittaa kritiikin testikenttään ja painaa lopuksi submit-nappua, jolloin kritiikki siirtyy järjestelmään.
+\begin{itemize}
+\item Kritiikin kirjoittaminen
+\end{itemize}
+Käyttäjä kirjautuu palveluun omilla tunnuksillaa. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arioida. Hän kirjoittaa kritiikin testikenttään ja painaa lopuksi submit-nappua, jolloin kritiikki siirtyy järjestelmään.
 
-- Kritiikin kommentointi
+\begin{itemize}
+\item Kritiikin kommentointi
+\end{itemize}
 Käyttäjä haluaa kommentoida jonkin toisen kirjoittamaa kritiikkiä. Hän painaa kritiikin lopussa olevaa Comment-nappia, jolloin aukeaa tekstikenttä kommenttia varten. Käyttäjä kirjoittaa kommenttinsa tekstikenttään ja painaa lopuksi Submit-nappia, jolloin kommentti siirtyy järjestelmään.
 
-- Kritiikin editointi
+\begin{itemize}
+\item Kritiikin editointi
+\end{itemize}
 Käyttäjää haluaa korjata tekemänsä virheen kritiikkiin. Hän painaa kritiikin lopussa olevaa Edit-nappulaa (näkyvillä vain kritiikin kirjoittaneelle käyttäjälle), tekee korjauksen ja painaa lopuksi Submit.
 
-- Kirjtilastojen tutkiminen
+\begin{itemize}
+\item Kirjtilastojen tutkiminen
+\end{itemize}
 Käyttäjä kirjautuu palveluun tunnuksillaan. Hän avaa Statistics-välilehden, josta löytyy työkaluja erilaisten kirjatilastojen tarkasteluun. Välilehden etusivunäkymä näyttää kirjat listattuna parhaimmasta huonoimpaamn arvosanakeskiarvojen avulla. Välilehdellä voi tehdä erilaisia rajauksia liittyen siihen, mitä tietoja kirjoista haluaa tarkastella.
 
-- Käyttäjätilin poisto (ylläpitäjä)
+\begin{itemize}
+\item Käyttäjätilin poisto (ylläpitäjä)
+\item Kirjan/kirjoihin liittyvän tiedon poisto/muokkaus
+\item Käyttäjätilin poisto
+\end{itemize}
 
-- Kirjan/kirjoihin liittyvän tiedon poisto/muokkaus
-
-- Käyttäjätilin poisto
+\end{document}
