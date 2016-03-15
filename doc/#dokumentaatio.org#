@@ -1,0 +1,14 @@
+#+TITLE:  Kritiikki – Tietokantasovellus kirja-arvioille
+#+DRAWERS: 
+#+AUTHOR: Tapio Ikkala 
+#+OPTIONS: H:5  toc:t  num:t tags:nil
+#+BABEL: :results output :session
+#+LATEX_CMD: xelatex
+#+LATEX_CLASS: memarticle
+#+LATEX_HEADER: \renewcommand{\thesection}{\arabic{section}}
+** 1. Johdanto
+Kritiikki-kirja-arviosovelluksen avulla on helppo pitää kirjaa siitä, mitä on lukenut ja antaa samalla kirjasta numeerinen arvosana ja tallentaa muistiin kirjan herättämiä ajatuksia. Sovellus tukee useaa käyttäjää, joten se soveltuu esimerkiksi sellaisen kirjallisudesta kiinnostuneen kaveriporukan käyttöön, joka haluaa keskenään jakaa lukukokemuksiaan. Sovelluksen avulla on myös mahdollista tutkia, minkälaisia kirjoja käyttäjäryhmä tai yksittäiset käyttäjät lukevat tai mistä kirjoista he ovat erityisesti pitäneet.
+
+Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella. Sovellus toteutetaan Java 8:lla ja tietokantakielenä käytetään PostgreSQL:ää.
+
+** 2. Yleiskuva järjestelmästä
