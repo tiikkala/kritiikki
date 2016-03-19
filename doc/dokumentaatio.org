@@ -25,10 +25,10 @@ Kaikki käyttäjät voivat lisätä järjestelmään kirjoja sekä antaa niille 
 #+END_LATEX
 
 **** Käyttäjäryhmät
-- Tavallinen käyttäjä
+- Tavallinen käyttäjä:
 Tavallisella käyttäjällä tarkoitetaan kaikkia käyttäjiä, jotka ovat rekisteröityneet palveluun ja joilla ei ole ylläpitäjän oikeuksia.
 
-- Ylläpitäjä
+- Ylläpitäjä:
 Ylläpitäjä vastaa järjestelmän ylläpidosta. Usealla käyttäjällä voi olla ylläpito-oikeudet. Ylläpitäjä voi tehdä järjestelmässä samat toiminnot kuin muutkin käyttäjät, minkä lisäksi hän pystyy poistamaan käyttäjiä ja muuta tietosisältöä järjestelmästä.
 
 **** Käyttötapauskuvaukset
@@ -36,26 +36,24 @@ Ylläpitäjä vastaa järjestelmän ylläpidosta. Usealla käyttäjällä voi ol
 
 - Kirjautuminen
 
-- Kirjan lisääminen
+- Kirjan lisääminen:
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä syötää kirjan ja kirjalijan nimen, ilmestymismaan, kustantajan, ilmestymisvuoden, sivunumeron sekä genren. Halutessan käyttäjä voi antaa kirjalle myös numeroavosanan asteikolla 4-10 tai kirjoittaa siitä kritiikin.
 
-- Kirjan arviointi
+- Kirjan arviointi:
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida ja antaa sille numeroarvosanan välillä 4-10.
 
-- Kritiikin kirjoittaminen
+- Kritiikin kirjoittaminen:
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arioida. Hän kirjoittaa kritiikin testikenttään ja painaa lopuksi submit-nappua, jolloin kritiikki siirtyy järjestelmään.
 
-- Kritiikin kommentointi
+- Kritiikin kommentointi:
 Käyttäjä haluaa kommentoida jonkin toisen kirjoittamaa kritiikkiä. Hän painaa kritiikin lopussa olevaa Comment-nappia, jolloin aukeaa tekstikenttä kommenttia varten. Käyttäjä kirjoittaa kommenttinsa tekstikenttään ja painaa lopuksi Submit-nappia, jolloin kommentti siirtyy järjestelmään.
 
-- Kritiikin editointi
+- Kritiikin editointi:
 Käyttäjää haluaa korjata tekemänsä virheen kritiikkiin. Hän painaa kritiikin lopussa olevaa Edit-nappulaa (näkyvillä vain kritiikin kirjoittaneelle käyttäjälle), tekee korjauksen ja painaa lopuksi Submit.
 
-- Kirjtilastojen tutkiminen
+- Kirjatilastojen tutkiminen:
 Käyttäjä kirjautuu palveluun tunnuksillaan. Hän avaa Statistics-välilehden, josta löytyy työkaluja erilaisten kirjatilastojen tarkasteluun. Välilehden etusivunäkymä näyttää kirjat listattuna parhaimmasta huonoimpaamn arvosanakeskiarvojen avulla. Välilehdellä voi tehdä erilaisia rajauksia liittyen siihen, mitä tietoja kirjoista haluaa tarkastella.
 
 - Käyttäjätilin poisto (ylläpitäjä)
 
-- Kirjan/kirjoihin liittyvän tiedon poisto/muokkaus
-
-- Käyttäjätilin poisto
+- Kirjan/kirjoihin liittyvän tiedon poisto/muokkaus (ylläpitäjä)
