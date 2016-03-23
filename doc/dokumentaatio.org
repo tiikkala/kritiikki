@@ -7,12 +7,11 @@
 #+LATEX_CLASS: memarticle
 #+LATEX_HEADER: \renewcommand{\thesection}{\arabic{section}}
 *** Johdanto
-Kritiikki-kirja-arviosovelluksen avulla on helppo pitää kirjaa siitä, mitä on lukenut ja antaa samalla kirjasta numeerinen arvosana ja tallentaa muistiin kirjan herättämiä ajatuksia. Sovellukseen on mahdollista lisätä useita käyttäjiä, joten se soveltuu esimerkiksi sellaisen kirjallisudesta kiinnostuneen kaveriporukan käyttöön, joka haluaa keskenään jakaa lukukokemuksiaan. 
+Kritiikki-kirja-arviosovellus on esimerkiksi kirjallisuudesta kiinnostuneen kaveriporukan käyttöön suunniteltu sovellus, jonka avulla on helppo jakaa tietoa siitä, mitä kukin on lukenut ja pitänyt lukemastaan. 
 
-Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella tomcatin avulla. Sovellus toteutetaan Javalla ja tietokantakielenä käytetään PostgreSQL:ää.
-
+Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcatin avulla. Sovellus toteutetaan Javalla ja tietokantakielenä käytetään PostgreSQL:ää.
 *** Yleiskuva järjestelmästä
-Järjestelmässä on kaksi käyttäjätyyppiä: tavallinen käyttäjä ja ylläpitäjä. Ne eroavat toisistaan siinä, että ylläpitäjällä on oikeus poistaa muiden käyttäjien tilejä sekä kirjoihin liittyviä tietoja. 
+Järjestelmässä on kaksi käyttäjätyyppiä: tavallinen käyttäjä ja ylläpitäjä. Tavallisen käyttäjän oikeuksien lisäksi ylläpitäjällä on oikeus poistaa muiden käyttäjien tilejä sekä kirjoihin liittyviä tietoja. 
 
 Kaikki käyttäjät voivat lisätä järjestelmään kirjoja sekä antaa niille numeerisia arvosteluja tai kirjoittaa kritiikkejä. Kritiikkeihin on myös mahdollista kirjoittaa kommentteja. Lisäksi järjestelmän avulla on mahdollista tutkia, millaisia kirjoja järjestelmän käyttäjät ovat lukeneet ja miten kirjoja on arvioitu.
 
@@ -20,6 +19,7 @@ Kaikki käyttäjät voivat lisätä järjestelmään kirjoja sekä antaa niille 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=1\textwidth]{/home/tapio/kritiikki/doc/käyttötapauskaavio.png}
+\\ Käyttötapauskaavio
 \end{center}
 \end{figure}
 #+END_LATEX
@@ -33,27 +33,38 @@ Ylläpitäjä vastaa järjestelmän ylläpidosta. Usealla käyttäjällä voi ol
 
 **** Käyttötapauskuvaukset
 - Rekisteröityminen
+Palveluun vielä rekisteröitymätön käyttäjä klikkaa kirjautumissivun Rekisteröiy, linkkiä, joka vie hänet rekisteröitymissivulle. Käyttäjä täyttää vaaidtut tiedot ja klikkaa lopuksi Lähetä-nappia.
 
 - Kirjautuminen
 
 - Kirjan lisääminen:
-Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä syötää kirjan ja kirjalijan nimen, ilmestymismaan, kustantajan, ilmestymisvuoden, sivunumeron sekä genren. Halutessan käyttäjä voi antaa kirjalle myös numeroavosanan asteikolla 4-10 tai kirjoittaa siitä kritiikin.
+Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Hän painaa etusivulla sijaitsevaa Lisää-nappia, joka vie hänet lomakesivulle, jolla kirjan lisääminen tapahtuu. Käyttäjä syötää kirjan ja kirjalijan nimen, ilmestymisvuoden, ilmestymiskielen, kustantajan ja sivunumeron. Halutessan käyttäjä voi antaa kirjalle myös numeroavosanan asteikolla 4-10,  kirjoittaa siitä kritiikin ja ladata järjestelmään kirjan kasikuvan.
 
 - Kirjan arviointi:
-Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida ja antaa sille numeroarvosanan välillä 4-10.
+Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida. Klikkaamalla kirjaa hän vie itsensä sivulle, joka näyttää kirjaan liittyvät tiedot ja mahdollistaa numeroarvosanana välillä 4-10 syöttämisen, jos käyttäjä ei vielä ole arvioinut kirjaa.
 
 - Kritiikin kirjoittaminen:
-Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arioida. Hän kirjoittaa kritiikin testikenttään ja painaa lopuksi submit-nappua, jolloin kritiikki siirtyy järjestelmään.
+Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida. Klikattuaan kirjaa hänelle aukeaa näkymä kirjaan liittyviin tietoihin sekä tekstikenttään, johon hän voi itse kirjoittaa. Teksti tallennettaan järjestelmään painamalla Lähetä-nappia.
 
 - Kritiikin kommentointi:
-Käyttäjä haluaa kommentoida jonkin toisen kirjoittamaa kritiikkiä. Hän painaa kritiikin lopussa olevaa Comment-nappia, jolloin aukeaa tekstikenttä kommenttia varten. Käyttäjä kirjoittaa kommenttinsa tekstikenttään ja painaa lopuksi Submit-nappia, jolloin kommentti siirtyy järjestelmään.
+Käyttäjä haluaa kommentoida jonkin toisen kirjoittamaa kritiikkiä. Hän painaa kritiikin lopussa olevaa Kommentoi-nappia, jolloin aukeaa tekstikenttä kommenttia varten. Käyttäjä kirjoittaa kommenttinsa tekstikenttään ja painaa lopuksi Lähetä-nappia, jolloin kommentti tallentuu järjestelmään.
 
-- Kritiikin editointi:
-Käyttäjää haluaa korjata tekemänsä virheen kritiikkiin. Hän painaa kritiikin lopussa olevaa Edit-nappulaa (näkyvillä vain kritiikin kirjoittaneelle käyttäjälle), tekee korjauksen ja painaa lopuksi Submit.
-
-- Kirjatilastojen tutkiminen:
-Käyttäjä kirjautuu palveluun tunnuksillaan. Hän avaa Statistics-välilehden, josta löytyy työkaluja erilaisten kirjatilastojen tarkasteluun. Välilehden etusivunäkymä näyttää kirjat listattuna parhaimmasta huonoimpaamn arvosanakeskiarvojen avulla. Välilehdellä voi tehdä erilaisia rajauksia liittyen siihen, mitä tietoja kirjoista haluaa tarkastella.
+- Kritiikin/kommentin editointi:
+Käyttäjää haluaa korjata tekemänsä virheen kritiikkiin/kommenttiin. Hän painaa kirjoittamansa kritiikin lopussa olevaa Edit-nappulaa (näkyvillä vain kritiikin kirjoittaneelle käyttäjälle), tekee korjauksen ja painaa lopuksi Lähetä.
 
 - Käyttäjätilin poisto (ylläpitäjä)
+Ylläpitäjä siirtyy vain ylläpitäjän oikeuksilla varustetuille käyttäjille näkyvälle Käyttäjät-välilehdelle, jossa hänelle aukeaa lista palvelun käyttäjistä sekä hakukenttä tietyn käyttäjän etsimiseksi. Ylläpitäjä klikkaa käyttäjää, ja valitsee avautuvasta "Haluatko poistaa tämän käyttäjän? Kyllä/Ei" -valikosta Kyllä.
 
 - Kirjan/kirjoihin liittyvän tiedon poisto/muokkaus (ylläpitäjä)
+Ylläpitäjä etsii etusivulta kirjan, jonka tietoja hän haluaa muokata. Hän klikkaa kirjaa, jolloin hän siirtyy
+
+*** Käyttöliittymä
+#+BEGIN_LATEX
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=1.3\textwidth, angle =270]{/home/tapio/kritiikki/doc/sivukartta.jpg}
+\vspace{5 mm} 
+\\ Sivukartta
+\end{center}
+\end{figure}
+#+END_LATEX
