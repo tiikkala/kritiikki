@@ -9,9 +9,81 @@
         <link href="../css/bootstrap-theme.css" rel="stylesheet">
         <link href="../css/main.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <script src="../js/bootstrap.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </head>
     <body>
+        <div class="modal fade" id="addBook" tabindex="-1" role="dialog"
+             aria-labelledby="addBook">
+            <div class="modal-dialog modal-lg" role="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Sulje"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addBook">Lisää kirja</h4>                  
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form class="col-xs-7" role="form">
+                                <div class="form-group col-xs-12">
+                                    <label for="bookName" class="control-label col-md-3 col-xs-4">Nimi</label>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="bookName" required>
+                                    </div>                           
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="author" class="control-label col-md-3 col-xs-4">Kirjailija</label>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="author" required>
+                                    </div>                           
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="year" class="control-label col-md-3 col-xs-4">Julkaisuvuosi</label>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="year">
+                                    </div>                           
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="language" class="control-label col-md-3 col-xs-4">Julkaisukieli</label>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="language" required>
+                                    </div>                           
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="publisher" class="control-label col-md-3 col-xs-4">Kustantaja</label>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="publisher">
+                                    </div>                           
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="publisher" class="control-label col-md-3 col-xs-4">Pisteet</label>
+                                    <div class="col-xs-6">
+                                        <input type="number" class="form-control" id="points">
+                                    </div>                           
+                                </div>
+                            </form>
+                            <div>
+                                <p>Lataa kirjan kansi</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form class="col-xs-12" role="form">
+                                <h4>Kirjoita kritiikki</h4>
+                                <div class="form-group">
+                                    <label for="otsikko">Otsikko</label>
+                                    <input type="text" class="form-control" id="otsikko">
+                                    <label for="leipateksti">Leipäteksti</label>
+                                    <textarea class="form-control" rows="10" id="leipateksti"></textarea>
+                                </div>                            
+                            </form>
+                        </div><!-- tekstikenttä kritiikille -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
+                        <button type="submit" class="btn btn-primary">Tallenna</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <nav class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -41,7 +113,8 @@
                     <input type="search" class="form-control" placeholder="Hae">              
                 </div>
                 <div class="col-xs-2">
-                    <button type="button" class="btn btn-primary">Lisää kirja</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#addBook">Lisää kirja</button>
                 </div>
             </div>
         </div>
@@ -49,11 +122,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nimi</th>
                         <th>Kirjailija</th>
-                        <th>Ilmestymisvuosi</th>
-                        <th>Maa</th>
-                        <th>Kustantaja</th>
+                        <th>Julkaisuvuosi</th>
+                        <th>Julkaisukieli</th>
+                        <th>Suomentaja</th>
                         <th>Pisteet</th>
                     </tr>
                 </thead>
