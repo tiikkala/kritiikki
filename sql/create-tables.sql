@@ -17,9 +17,9 @@ sposti varchar(300) NOT NULL
 CREATE TABLE kritiikit
 (
 id SERIAL PRIMARY KEY,
-kirjaId REFERENCES kirjat ON DELETE cascade
+kirjaId REFERENCES kirjat (id) ON DELETE cascade
 				  ON UPDATE cascade,
-kirjoittaja REFERENCES kayttajat ON DELETE cascade
+kirjoittaja REFERENCES kayttajat (id) ON DELETE cascade
 					 ON UPDATE cascade,
 teksti VARCHAR(100000) NOT NULL,
 otsikko VARCHAR(300) NOT NULL,
@@ -28,9 +28,9 @@ otsikko VARCHAR(300) NOT NULL,
 CREATE TABLE kommentit
 (
 id SERIAL PRIMARY KEY,
-kritiikkiId REFERENCES kritiikki ON DELETE cascade
+kritiikkiId REFERENCES kritiikki (id) ON DELETE cascade
 			  	         ON UPDATE cascade,
-kayttajaId REFERENCES kayttajat ON DELETE cascade
+kayttajaId REFERENCES kayttajat (id) ON DELETE cascade
 					ON UPDATE cascade,
 teksti varchar(10000) NOT NULL
 );
@@ -39,8 +39,8 @@ CREATE TABLE pisteet
 (
 id SERIAL PRIMARY KEY,
 pisteet INTEGER,
-kirjaId REFERENCES kirjat ON DELETE cascade
+kirjaId REFERENCES kirjat (id) ON DELETE cascade
 				  ON UPDATE cascade,
-kayttajaId REFERENCES kayttajat ON DELETE cascade
+kayttajaId REFERENCES kayttajat (id) ON DELETE cascade
 					ON UPDATE cascade
 );
