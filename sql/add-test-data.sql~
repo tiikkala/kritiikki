@@ -1,0 +1,6 @@
+INSERT INTO kirjat VALUES ('Rikos ja rangaistus', 'Dostojevski, Fjodor', 1866,
+'Venäjä', 'Kuukasjärvi, Olli'), ('Neurovelho', 'Gibson, William', 'Englanti', 1984, 'Häilä, Arto');
+
+INSERT INTO kayttajat VALUES ('karikriitikko', 'kari.hamalainen@hotmail.com'), ('sepisepi', 'seppo.junkkari@yahoo.com');
+
+INSERT INTO kritiikit ((SELECT id FROM kirjat WHERE nimi = 'Rikos ja rangaistus'), 
