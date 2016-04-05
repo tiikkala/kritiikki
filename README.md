@@ -4,6 +4,6 @@ Kritiikki-kirja-arviosovellus on esimerkiksi kirjallisuudesta kiinnostuneen kave
 
 Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcatin avulla. Sovellus toteutetaan Javalla ja tietokantakielenä käytetään PostgreSQL:ää.
 
-- [Dokumentaatio](../blob/master/doc/dokumentaatio.pdf)
+- [Dokumentaatio](doc/dokumentaatio.pdf)
 
 - [Etusivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
