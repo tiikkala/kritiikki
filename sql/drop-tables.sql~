@@ -1,0 +1,1 @@
+DROP TABLE pisteet, kommentit, kritiikit, kayttajat, kirjat;

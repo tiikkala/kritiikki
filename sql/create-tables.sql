@@ -3,9 +3,9 @@ CREATE TABLE kirjat
 id SERIAL PRIMARY KEY,
 nimi VARCHAR(300) NOT NULL,
 kirjailija VARCHAR(300),
-julkaisuvuosi INTEGER,
+julkaisuvuosi SMALLINT,
 julkaisukieli VARCHAR(200),
-suomentaja VARCHAR(300),
+suomentaja VARCHAR(300)
 );
 
 CREATE TABLE kayttajat
@@ -17,30 +17,30 @@ sposti varchar(300) NOT NULL
 CREATE TABLE kritiikit
 (
 id SERIAL PRIMARY KEY,
-kirjaId REFERENCES kirjat (id) ON DELETE cascade
+kirjaId INTEGER REFERENCES kirjat ON DELETE cascade
 				  ON UPDATE cascade,
-kirjoittaja REFERENCES kayttajat (id) ON DELETE cascade
-					 ON UPDATE cascade,
+kirjoittaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
+					      ON UPDATE cascade,
 teksti VARCHAR(100000) NOT NULL,
-otsikko VARCHAR(300) NOT NULL,
+otsikko VARCHAR(300) NOT NULL
 );
 
 CREATE TABLE kommentit
 (
 id SERIAL PRIMARY KEY,
-kritiikkiId REFERENCES kritiikki (id) ON DELETE cascade
+kritiikkiId INTEGER REFERENCES kritiikit ON DELETE cascade
 			  	         ON UPDATE cascade,
-kayttajaId REFERENCES kayttajat (id) ON DELETE cascade
-					ON UPDATE cascade,
-teksti varchar(10000) NOT NULL
+kirjoittaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
+					     ON UPDATE cascade,
+teksti VARCHAR(10000) NOT NULL
 );
 
 CREATE TABLE pisteet
 (
 id SERIAL PRIMARY KEY,
 pisteet INTEGER,
-kirjaId REFERENCES kirjat (id) ON DELETE cascade
+kirjaId INTEGER REFERENCES kirjat ON DELETE cascade
 				  ON UPDATE cascade,
-kayttajaId REFERENCES kayttajat (id) ON DELETE cascade
-					ON UPDATE cascade
+kayttaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
+					     ON UPDATE cascade
 );

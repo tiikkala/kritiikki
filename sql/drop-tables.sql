@@ -1,1 +1,1 @@
-DROP TABLE kirjat, kritiikit, kommentit, kayttajat, pisteet;
+DROP TABLE IF EXISTS pisteet, kommentit, kritiikit, kayttajat, kirjat;
