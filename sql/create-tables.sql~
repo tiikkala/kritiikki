@@ -11,6 +11,7 @@ suomentaja VARCHAR(300)
 CREATE TABLE kayttajat
 (
 id varchar(100) PRIMARY KEY,
+salasana varchar(20) NOT NULL
 sposti varchar(300) NOT NULL
 );
 
@@ -28,7 +29,7 @@ otsikko VARCHAR(300) NOT NULL
 CREATE TABLE kommentit
 (
 id SERIAL PRIMARY KEY,
-kritiikkiId INTEGER REFERENCES kritiikki ON DELETE cascade
+kritiikkiId INTEGER REFERENCES kritiikit ON DELETE cascade
 			  	         ON UPDATE cascade,
 kirjoittaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
 					     ON UPDATE cascade,

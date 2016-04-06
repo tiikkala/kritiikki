@@ -1,13 +1,13 @@
 INSERT INTO kirjat VALUES (DEFAULT, 'Rikos ja rangaistus', 'Dostojevski, Fjodor', 1866,
 'Venäjä', 'Kuukasjärvi, Olli'), (DEFAULT, 'Neurovelho', 'Gibson, William', 1984, 'Englanti', 'Häilä, Arto');
 
-INSERT INTO kayttajat VALUES ('karikriitikko', 'kari.hamalainen@hotmail.com'), ('sepisepi', 'seppo.junkkari@yahoo.com');
+INSERT INTO kayttajat VALUES ('karikriitikko', 'kari1234' 'kari.hamalainen@hotmail.com'), ('sepisepi', 'seppo.junkkari@yahoo.com');
 
 INSERT INTO kommentit VALUES (DEFAULT, (SELECT id FROM kritiikit WHERE otsikko = 'Lorem ipsum'), (SELECT id FROM kayttajat WHERE id = 'karikriitikko'), 'Äärimmäisen älykäs kommentti');
 
 INSERT INTO pisteet VALUES (DEFAULT, 9, (SELECT id FROM kirjat WHERE nimi = 'Neurovelho'), 'sepisepi');
 
-INSERT INTO kritiikit (DEFAULT, (SELECT id FROM kirjat WHERE nimi = 'Rikos ja rangaistus'), 'sepisepi', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.
+INSERT INTO kritiikit VALUES (DEFAULT, (SELECT id FROM kirjat WHERE nimi = 'Rikos ja rangaistus'), 'sepisepi', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.
 
 Mauris sed libero. Suspendisse facilisis nulla in lacinia laoreet, lorem velit accumsan velit vel mattis libero nisl et sem. Proin interdum maecenas massa turpis sagittis in, interdum non lobortis vitae massa. Quisque purus lectus, posuere eget imperdiet nec sodales id arcu. Vestibulum elit pede dictum eu, viverra non tincidunt eu ligula.
 

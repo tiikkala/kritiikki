@@ -11,6 +11,7 @@ suomentaja VARCHAR(300)
 CREATE TABLE kayttajat
 (
 id varchar(100) PRIMARY KEY,
+salasana varchar(20) NOT NULL,
 sposti varchar(300) NOT NULL
 );
 
