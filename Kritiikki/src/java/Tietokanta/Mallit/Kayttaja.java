@@ -1,6 +1,6 @@
 package Tietokanta.Mallit;
 
-import Tietokanta.Yhteys;
+import Tietokanta.Tietokanta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,12 +45,12 @@ public class Kayttaja {
     }
 
     public static List<Kayttaja> getKayttajat() throws SQLException {
-        String sql = "SELECT id, salasana,  FROM kayttajat";
-        Connection yhteys = Yhteys.getYhteys();
+        String sql = "SELECT id, salasana, sposti FROM kayttajat";
+        Connection yhteys = Tietokanta.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
         ResultSet tulokset = kysely.executeQuery();
 
-        ArrayList<Kayttaja> kayttajat = new ArrayList<>();
+        ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         while (tulokset.next()) {
             //Luodaan tuloksia vastaava olio ja palautetaan olio:
             Kayttaja k = new Kayttaja(tulokset.getString("id"), tulokset.getString("salasana"),

@@ -9,3 +9,5 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 - [Etusivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
 
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
+
+- [Listausesimerkki](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/KayttajaListausServlet)

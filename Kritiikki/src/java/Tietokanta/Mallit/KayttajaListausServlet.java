@@ -30,24 +30,23 @@ public class KayttajaListausServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            List<Kayttaja> kayttajat = Kayttaja.getKayttajat();
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet KayttajaListausServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet KayttajaListausServlet at " + request.getContextPath() + "</h1>");
-            for (Kayttaja kayttaja : kayttajat) {
-                out.println("<li>" + kayttaja.getId() + "</li>");
-            }
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        List<Kayttaja> kayttajat = Kayttaja.getKayttajat();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Servlet KayttajaListausServlet</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Servlet KayttajaListausServlet at " + request.getContextPath() + "</h1>");
+        for (Kayttaja kayttaja : kayttajat) {
+            out.println("<li>" + kayttaja.getId() + "</li>");
         }
+        out.println("</body>");
+        out.println("</html>");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -61,8 +60,10 @@ public class KayttajaListausServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (SQLException ex) {
-            Logger.getLogger(KayttajaListausServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KayttajaListausServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -79,8 +80,10 @@ public class KayttajaListausServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (SQLException ex) {
-            Logger.getLogger(KayttajaListausServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KayttajaListausServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

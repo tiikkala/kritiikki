@@ -30,8 +30,8 @@ public class Testi extends HttpServlet {
     //HttpServlet-luokan perivään servlettiin menevä metodi:
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, NamingException {
-        Yhteys y = new Yhteys();
-        Connection yhteys = y.getYhteys(); // Haetaan Yhteys-luokalta yhteysolio.
+        Tietokanta y = new Tietokanta();
+        Connection yhteys = y.getYhteys(); //Haetaan tietokantaluokalta yhteysolio
         PreparedStatement kysely = null;
         ResultSet tulokset = null;
         PrintWriter out = response.getWriter();
@@ -73,9 +73,9 @@ public class Testi extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Yhteys.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(Yhteys.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,9 +93,9 @@ public class Testi extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Yhteys.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(Yhteys.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
