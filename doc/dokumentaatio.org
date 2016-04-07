@@ -140,6 +140,14 @@ Käyttäjän attribuutit ovat yksilöllinen käyttäjätunnus, salasan ja sähk�
 Pistisiin liittyy automaattisesti generoituva id sekä yksittäistä arviota kuvaava kokonaisluku välillä 4-10. Pistetieto liittyy aina yhteen kirjaan sekä kyseiset pisteet antaneeseen käyttäjään.
 
 *** Relaatiotietokantakaavio
+#+BEGIN_LATEX
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=1\textwidth]{/home/tapio/kritiikki/doc/relaatiotietokantakaavio.png}
+\\ Relaatiotietokantakaavio
+\end{center}
+\end{figure}
+#+END_LATEX
 *** Järjestelmän yleisrakenne
 *** Käyttöliittymä ja järjestelmän komponentit
 **** Sivukartta
