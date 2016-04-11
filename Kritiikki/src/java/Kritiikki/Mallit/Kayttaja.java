@@ -1,24 +1,20 @@
-package Tietokanta.Mallit;
+package Kritiikki.Mallit;
 
-import Tietokanta.Tietokanta;
+import Kritiikki.Tietokanta.Tietokanta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Kayttaja {
+public class Kayttaja extends Kyselytoiminnot {
 
     private String Id;
     private String salasana;
     private String sposti;
-
-    public Kayttaja(String Id, String salasana, String sposti) {
-        this.Id = Id;
-        this.salasana = salasana;
-        this.sposti = sposti;
-    }
 
     public String getId() {
         return this.Id;
@@ -44,6 +40,33 @@ public class Kayttaja {
         this.sposti = sposti;
     }
 
+    public Kayttaja etsiKayttaja(String tunnus, String salasana) {
+
+        try {
+            String sql = "SELECT id, salasana FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
+
+            alustaKysely(sql);
+            statement.setString(1, tunnus);
+            statement.setString(2, salasana);
+
+            suoritaKysely();
+
+            Kayttaja kirjautunut = null;
+
+            if (results.next()) {
+                kirjautunut = new Kayttaja();
+                kirjautunut.setId(tunnus);
+                kirjautunut.setSalasana(salasana);
+            }
+            return kirjautunut;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lopeta();
+        }
+        return null;
+    }
+
     public static List<Kayttaja> getKayttajat() throws SQLException {
         String sql = "SELECT id, salasana, sposti FROM kayttajat";
         Connection yhteys = Tietokanta.getYhteys();
@@ -53,8 +76,10 @@ public class Kayttaja {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         while (tulokset.next()) {
             //Luodaan tuloksia vastaava olio ja palautetaan olio:
-            Kayttaja k = new Kayttaja(tulokset.getString("id"), tulokset.getString("salasana"),
-                    tulokset.getString("sposti"));
+            Kayttaja k = new Kayttaja();
+            k.setId(tulokset.getString("id"));
+            k.setSalasana(tulokset.getString("salasana"));
+            k.setSposti(tulokset.getString("sposti"));
             kayttajat.add(k);
         }
         //Suljetaan kaikki resutuloksetsId:
@@ -73,3 +98,4 @@ public class Kayttaja {
         return kayttajat;
     }
 }
+

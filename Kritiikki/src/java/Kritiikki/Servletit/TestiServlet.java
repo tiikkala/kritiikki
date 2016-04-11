@@ -1,4 +1,4 @@
-package Tietokanta;
+package Kritiikki.Servletit;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
-        <servlet-name>Testi</servlet-name>
-        <servlet-class>Tietokanta.Testi</servlet-class>
+        <servlet-name>KirjautuminenServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjautuminenServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TestiServlet</servlet-name>
-        <servlet-class>Tietokanta.TestiServlet</servlet-class>
+        <servlet-name>YleisServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.YleisServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KayttajaListausServlet</servlet-name>
-        <servlet-class>Tietokanta.Mallit.KayttajaListausServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KayttajaListausServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>Testi</servlet-name>
-        <url-pattern>/Testi</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TestiServlet</servlet-name>
-        <url-pattern>/TestiServlet</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>EtusivuServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.EtusivuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OhjaaKirjautumisSivulleServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.OhjaaKirjautumisSivulleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KirjauduUlosServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjauduUlosServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KirjautuminenServlet</servlet-name>
+        <url-pattern>/Kirjautuminen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>YleisServlet</servlet-name>
+        <url-pattern>/YleisServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EtusivuServlet</servlet-name>
+        <url-pattern>/Etusivu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OhjaaKirjautumisSivulleServlet</servlet-name>
+        <url-pattern>/OhjaaKirjautumiseen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KirjauduUlosServlet</servlet-name>
+        <url-pattern>/Uloskirjautuminen</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -30,6 +54,8 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>kirjautuminen.jsp</welcome-file>
     </welcome-file-list>
+    <servlet-name>KayttajaListausServlet</servlet-name>
+    <url-pattern>/KayttajaListausServlet</url-pattern>
 </web-app>
