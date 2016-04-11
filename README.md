@@ -8,8 +8,8 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 
 - [Sovelluksen kirjautumissivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
 
-Tunnuksia: karikrtiitikko, sepisepi
-Salasanoja: kari1234, seppo1234
+- Tunnuksia: karikrtiitikko, sepisepi
+- Salasanoja: kari1234, seppo1234
 
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
 
