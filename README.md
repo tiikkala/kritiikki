@@ -6,7 +6,10 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 
 - [Dokumentaatio](doc/dokumentaatio.pdf)
 
-- [Etusivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
+- [Sovelluksen kirjautumissivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
+
+Tunnu: karikrtiitikko
+Salasana: kari1234
 
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
 
