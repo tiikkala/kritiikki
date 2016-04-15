@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 
 public class Kayttaja extends Kyselytoiminnot {
 
-    private String Id;
+    private String id;
     private String salasana;
     private String sposti;
 
     public String getId() {
-        return this.Id;
+        return this.id;
     }
 
     public String getSalasana() {
@@ -28,8 +28,8 @@ public class Kayttaja extends Kyselytoiminnot {
         return this.sposti;
     }
 
-    public void setId(String Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setSalasana(String salasana) {
@@ -68,6 +68,7 @@ public class Kayttaja extends Kyselytoiminnot {
     }
 
     public static List<Kayttaja> getKayttajat() throws SQLException {
+                
         String sql = "SELECT id, salasana, sposti FROM kayttajat";
         Connection yhteys = Tietokanta.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
@@ -82,7 +83,7 @@ public class Kayttaja extends Kyselytoiminnot {
             k.setSposti(tulokset.getString("sposti"));
             kayttajat.add(k);
         }
-        //Suljetaan kaikki resutuloksetsId:
+        //Suljetaan kaikki resutuloksetsid:
         try {
             tulokset.close();
         } catch (Exception e) {
