@@ -28,6 +28,10 @@
         <servlet-name>KirjalistaServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.KirjalistaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KirjaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>KirjalistaServlet</servlet-name>
         <url-pattern>/Kirjalista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KirjaServlet</servlet-name>
+        <url-pattern>/Kirja</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
