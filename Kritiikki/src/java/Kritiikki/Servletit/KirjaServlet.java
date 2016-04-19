@@ -14,30 +14,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class KirjaServlet extends YleisServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String idParam = request.getParameter("id");
-        int id;
-        try {
-            id = Integer.parseInt(idParam);
-        } catch (Exception e) {
-            id = 0;
-        }        
-        Kirja k = new Kirja();
-        k.haeKirjaJaPisteet(id);
+        int id = haeId(request);    
+        Kirja k = new Kirja().haeKirjaJaPisteet(id);
         request.setAttribute("kirja", k);
-        naytaJSP("kirja.jps", request, response);
+        naytaJSP("kirja", request, response);
         PrintWriter out = luoPrintWriter(response);
         try {
         } finally {

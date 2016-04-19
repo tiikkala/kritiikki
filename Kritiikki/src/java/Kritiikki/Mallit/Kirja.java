@@ -79,7 +79,12 @@ public class Kirja extends Kyselytoiminnot {
     }
 
     public double getPisteet() {
-        return this.pisteet;
+        if (this.pisteet == null) {
+            return 0;
+        }
+        else {
+            return this.pisteet;
+        }
     }
 
     /**
@@ -136,7 +141,9 @@ public class Kirja extends Kyselytoiminnot {
             alustaKysely(sql);
             statement.setInt(1, id);
             suoritaKysely();
-            kirja = palautaKirjaJaPisteet();
+            while (results.next()) {
+                kirja = palautaKirjaJaPisteet();
+            }
         } catch (SQLException e) {
             Logger.getLogger(Kayttaja.class
                     .getName()).log(Level.SEVERE, null, e);
