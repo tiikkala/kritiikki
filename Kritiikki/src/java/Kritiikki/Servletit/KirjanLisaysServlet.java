@@ -3,6 +3,7 @@ package Kritiikki.Servletit;
 import Kritiikki.Mallit.Kirja;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,23 +13,19 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tapio
  */
-public class KirjaServlet extends YleisServlet {
+public class KirjanLisaysServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        int id = haeId(request);
-        Kirja k = new Kirja().haeKirjaJaPisteet(id);
-        request.setAttribute("kirja", k);
-
-        PrintWriter out = luoPrintWriter(response);
-        try {
-            paivitaIlmoitus(request);
-            naytaJSP("kirja", request, response);
-        } finally {
-            out.close();
-        }
+        
+        Kirja uusiKirja = new Kirja();
+        Collection<String> virheet = uusiKirja.getVirheet();
+        
+        request.setAttribute("virheet", virheet);
+        request.setAttribute("kirja", uusiKirja);
+             
+        PrintWriter out = luoPrintWriter(response);       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

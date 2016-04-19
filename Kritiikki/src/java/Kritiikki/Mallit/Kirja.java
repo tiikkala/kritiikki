@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -17,6 +19,8 @@ import javax.naming.NamingException;
  * SQL-kyselyjä.
  */
 public class Kirja extends Kyselytoiminnot {
+
+    private Map<String, String> virheet = new HashMap<String, String>();
 
     private int id;
     private String nimi;
@@ -53,25 +57,63 @@ public class Kirja extends Kyselytoiminnot {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public boolean onkoKelvollinen() {
+        return this.virheet.isEmpty();
+    }
+    
+    public Collection<String> getVirheet() {
+        return this.virheet.values();
+    }
 
     public void setNimi(String nimi) {
-        this.nimi = nimi;
+        this.nimi = nimi.trim();
+        if (nimi.trim().length() == 0) {
+            virheet.put("nimi", "Nimi ei saa olla tyhjä.");
+        } else {
+            virheet.remove("nimi");
+        }
+        if (nimi.trim().length() >= 200) {
+            virheet.put("nimi", "Nimi " + enintaanKaksisataa());
+        } else {
+            virheet.remove("nimi");
+        }
     }
 
     public void setKirjailja(String kirjailija) {
-        this.kirjailija = kirjailija;
+        this.kirjailija = kirjailija.trim();
+        if (kirjailija.trim().length() >= 200) {
+            virheet.put("kirjailija", "Kirjailijan nimi " + enintaanKaksisataa());
+        } else {
+            virheet.remove("kirjailija");
+        }
     }
 
     public void setJulkaisuKieli(String kieli) {
-        this.julkaisukieli = kieli;
+        this.julkaisukieli = kieli.trim();
+        if (kieli.trim().length() >= 200) {
+            virheet.put("kieli", "Julkaisukieli " + enintaanKaksisataa());
+        } else {
+            virheet.remove("kieli");
+        }
     }
 
-    public void setJulkaisuvuosi(int vuosi) {
-        this.julkaisuvuosi = vuosi;
+    public void setJulkaisuvuosi(String vuosi) {
+        try {
+        this.julkaisuvuosi = Integer.parseInt(vuosi);
+        virheet.remove("vuosi");
+        } catch (NumberFormatException e) {
+            virheet.put("vuosi", "Julkaisuvuoden on oltava kokonaisluku.");
+        }
     }
 
     public void setSuomentaja(String suomentaja) {
-        this.suomentaja = suomentaja;
+        this.suomentaja = suomentaja.trim();
+        if (suomentaja.trim().length() >= 200) {
+            virheet.put("suomentaja", "Suomentajan nimi " + enintaanKaksisataa());
+        } else {
+            virheet.remove("suomentaja");
+        }
     }
 
     public void setPisteet(double pisteet) {
@@ -81,9 +123,27 @@ public class Kirja extends Kyselytoiminnot {
     public double getPisteet() {
         if (this.pisteet == null) {
             return 0;
-        }
-        else {
+        } else {
             return this.pisteet;
+        }
+    }
+
+    private String enintaanKaksisataa() {
+        return "saa olla enintään 200 merkkiä pitkä.";
+    }
+
+    public void lisaaKantaan() {
+        try {
+            String sql = "INSERT INTO kirjat(nimi, kirjailija, julkaisuvuosi, "
+                    + "julkaisukieli, suomentaja) VALUES(?, ?, ?, ?, ?)";
+            alustaKysely(sql);
+            suoritaKysely();
+            results.next();
+            this.id = results.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kirja.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lopeta();
         }
     }
 
@@ -117,7 +177,7 @@ public class Kirja extends Kyselytoiminnot {
             k.setId(results.getInt("id"));
             k.setNimi(results.getString("nimi"));
             k.setKirjailja(results.getString("kirjailija"));
-            k.setJulkaisuvuosi(results.getInt("julkaisuvuosi"));
+            k.setJulkaisuvuosi(Integer.toString(results.getInt("julkaisuvuosi")));
             k.setJulkaisuKieli(results.getString("julkaisukieli"));
             k.setSuomentaja(results.getString("suomentaja"));
             k.setPisteet(results.getDouble("pisteet"));
