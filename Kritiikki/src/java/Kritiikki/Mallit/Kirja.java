@@ -135,8 +135,13 @@ public class Kirja extends Kyselytoiminnot {
     public void lisaaKantaan() {
         try {
             String sql = "INSERT INTO kirjat(nimi, kirjailija, julkaisuvuosi, "
-                    + "julkaisukieli, suomentaja) VALUES(?, ?, ?, ?, ?)";
+                    + "julkaisukieli, suomentaja) VALUES(?, ?, ?, ?, ?) RETURNING id";
             alustaKysely(sql);
+            statement.setString(1, this.getNimi());
+            statement.setString(2, this.getKirjailija());
+            statement.setInt(3, this.getJulkaisuvuosi());
+            statement.setString(4, this.getJulkaisukieli());
+            statement.setString(5, this.getSuomentaja());
             suoritaKysely();
             results.next();
             this.id = results.getInt(1);

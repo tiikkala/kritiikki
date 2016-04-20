@@ -18,14 +18,46 @@ public class KirjanLisaysServlet extends YleisServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         Kirja uusiKirja = new Kirja();
-        Collection<String> virheet = uusiKirja.getVirheet();
-        
-        request.setAttribute("virheet", virheet);
-        request.setAttribute("kirja", uusiKirja);
-             
-        PrintWriter out = luoPrintWriter(response);       
+
+        PrintWriter out = luoPrintWriter(response);
+
+        try {
+            
+            String nimi = haeStringArvo("nimi", request);
+            String kirjailija = haeStringArvo("kirjailija", request);
+            String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
+            String julkaisukieli = haeStringArvo("julkaisukieli", request);
+            String suomentaja = haeStringArvo("suomentaja", request);
+            String pisteet = haeStringArvo("pisteet", request);
+            
+            uusiKirja.setNimi(nimi);
+            uusiKirja.setKirjailja(kirjailija);
+            uusiKirja.setJulkaisuvuosi(julkaisuvuosi);
+            uusiKirja.setJulkaisuKieli(julkaisukieli);
+            uusiKirja.setSuomentaja(suomentaja);
+            // pisteiden lisääminen kantaan täytyy miettiä,
+            // ne menevät eri tauluun
+            
+            
+            uusiKirja.lisaaKantaan();
+
+            if (uusiKirja.onkoKelvollinen()) {
+                uusiKirja.lisaaKantaan();
+                ohjaaSivulle("etusivu", response);
+                request.getSession().setAttribute("ilmoitus", "Kirja lisätty onnistuneesti.");
+            } else {
+                Collection<String> virheet = uusiKirja.getVirheet();
+                request.setAttribute("virheet", virheet);
+                request.setAttribute("kirja", uusiKirja);
+                naytaJSP("etusivu", request, response);
+            }
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

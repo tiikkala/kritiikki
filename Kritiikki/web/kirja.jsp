@@ -1,6 +1,9 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <t:pohja pageTitle="Kirja">
+    <c:if test ="${kirjautunut == null}">
+        <jsp:forward page="OhjaaKirjautumiseen"></jsp:forward>
+    </c:if>
     <div class="container">
         <div class="row">
             <div class="col-xs-9">
@@ -23,18 +26,20 @@
                 <h4>Kirjan kansi</h4>
             </div>
         </div>
-        <div class="col-xs-12">
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="points">Arvostele:</label>
-                    <input type="number" class="form-control" id="points" style="max-width:100px"
-                           placeholder="4-10">
-                    <button type="submit" class="btn btn-primary">Tallenna</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#openCritiquField">
-                        Kirjoita kritiikki
-                    </button> <!-- Button trigger modal -->
-                </div>
-            </form>
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="points">Arvostele:</label>
+                        <input type="number" class="form-control" id="points" style="max-width:100px"
+                               placeholder="4-10">
+                        <button type="submit" class="btn btn-primary">Tallenna</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#openCritiquField">
+                            Kirjoita kritiikki
+                        </button> <!-- Button trigger modal -->
+                    </div>
+                </form>
+            </div>
             <div class="help-block"></div>
         </div>
         <div class="col-md-offset-1">

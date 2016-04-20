@@ -12,9 +12,8 @@
         <link href="css/main.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js"></script>
-
+        <script src="js/readmore.js" type="text/javascript"></script>
         <title>${pageTitle}</title>
-
         <c:if test="${ilmoitus != null}">
         <div class="alert alert-info">${ilmoitus}</div>
     </c:if>      

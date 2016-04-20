@@ -1,5 +1,5 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <t:pohja pageTitle="Etusivu">    
     <c:if test ="${kirjautunut == null}">
         <jsp:forward page="OhjaaKirjautumiseen"></jsp:forward>
@@ -15,41 +15,41 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                            <form class="col-xs-7" role="form">
+                        <form class="col-xs-7" id="kirjanTiedot" role="form" action="KirjanLisays" method="POST">
                                 <div class="form-group col-xs-12">
                                     <label for="bookName" class="control-label col-md-3 col-xs-4">Nimi</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="nimi" required value="${kirja.nimi}">
+                                        <input type="text" class="form-control" name="nimi" required value="${nimi}">
                                     </div>                           
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <label for="author" class="control-label col-md-3 col-xs-4">Kirjailija</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="kirjailija" value="${kirja.kirjailija}">
+                                        <input type="text" class="form-control" name="kirjailija" value="${kirjailija}">
                                     </div>                           
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <label for="year" class="control-label col-md-3 col-xs-4">Julkaisuvuosi</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="julkaisuvuosi" value="${kirja.julkaisuvuosi}">
+                                        <input type="text" class="form-control" name="julkaisuvuosi" value="${julkaisuvuosi}">
                                     </div>                           
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <label for="language" class="control-label col-md-3 col-xs-4">Julkaisukieli</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="julkaisukieli" value="${kirja.julkaisukieli}">
+                                        <input type="text" class="form-control" name="julkaisukieli" value="${julkaisukieli}">
                                     </div>                           
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <label for="publisher" class="control-label col-md-3 col-xs-4">Suomentaja</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="suomentaja" value="${kirja.suomentaja}">
+                                        <input type="text" class="form-control" name="suomentaja" value="${suomentaja}">
                                     </div>                           
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <label for="publisher" class="control-label col-md-3 col-xs-4">Pisteet</label>
                                     <div class="col-xs-6">
-                                        <input type="number" class="form-control" id="pisteet" value="${kirja.pisteet}">
+                                        <input type="number" class="form-control" name="pisteet" value="${pisteet}">
                                     </div>                           
                                 </div>
                             </form>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
-                                <button type="submit" class="btn btn-primary">Tallenna</button>
+                                <button type="submit" form="kirjanTiedot" class="btn btn-primary">Tallenna</button>
                             </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
