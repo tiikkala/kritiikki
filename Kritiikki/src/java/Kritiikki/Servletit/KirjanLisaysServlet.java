@@ -3,6 +3,7 @@ package Kritiikki.Servletit;
 import Kritiikki.Mallit.Kirja;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,14 +25,14 @@ public class KirjanLisaysServlet extends YleisServlet {
         PrintWriter out = luoPrintWriter(response);
 
         try {
-            
+
             String nimi = haeStringArvo("nimi", request);
             String kirjailija = haeStringArvo("kirjailija", request);
             String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
             String julkaisukieli = haeStringArvo("julkaisukieli", request);
             String suomentaja = haeStringArvo("suomentaja", request);
             String pisteet = haeStringArvo("pisteet", request);
-            
+
             uusiKirja.setNimi(nimi);
             uusiKirja.setKirjailja(kirjailija);
             uusiKirja.setJulkaisuvuosi(julkaisuvuosi);
@@ -39,17 +40,15 @@ public class KirjanLisaysServlet extends YleisServlet {
             uusiKirja.setSuomentaja(suomentaja);
             // pisteiden lisääminen kantaan täytyy miettiä,
             // ne menevät eri tauluun
-            
-            
-            uusiKirja.lisaaKantaan();
 
             if (uusiKirja.onkoKelvollinen()) {
                 uusiKirja.lisaaKantaan();
-                ohjaaSivulle("etusivu", response);
+                ohjaaSivulle("Etusivu", response);
                 request.getSession().setAttribute("ilmoitus", "Kirja lisätty onnistuneesti.");
             } else {
                 Collection<String> virheet = uusiKirja.getVirheet();
-                request.setAttribute("virheet", virheet);
+                String ilmoitus = virheet.iterator().next();
+                request.setAttribute("ilmoitus", ilmoitus);
                 request.setAttribute("kirja", uusiKirja);
                 naytaJSP("etusivu", request, response);
             }

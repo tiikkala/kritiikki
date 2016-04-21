@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -69,12 +70,12 @@ public class Kirja extends Kyselytoiminnot {
     public void setNimi(String nimi) {
         this.nimi = nimi.trim();
         if (nimi.trim().length() == 0) {
-            virheet.put("nimi", "Nimi ei saa olla tyhjä.");
+            virheet.put("nimi", "Lisäys epäonnistui. Nimi ei saa olla tyhjä.");
         } else {
             virheet.remove("nimi");
         }
         if (nimi.trim().length() >= 200) {
-            virheet.put("nimi", "Nimi " + enintaanKaksisataa());
+            virheet.put("nimi", "Lisäys epäonnistui. Nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("nimi");
         }
@@ -83,7 +84,7 @@ public class Kirja extends Kyselytoiminnot {
     public void setKirjailja(String kirjailija) {
         this.kirjailija = kirjailija.trim();
         if (kirjailija.trim().length() >= 200) {
-            virheet.put("kirjailija", "Kirjailijan nimi " + enintaanKaksisataa());
+            virheet.put("kirjailija", "Lisäys epäonnistui. Kirjailijan nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("kirjailija");
         }
@@ -92,7 +93,7 @@ public class Kirja extends Kyselytoiminnot {
     public void setJulkaisuKieli(String kieli) {
         this.julkaisukieli = kieli.trim();
         if (kieli.trim().length() >= 200) {
-            virheet.put("kieli", "Julkaisukieli " + enintaanKaksisataa());
+            virheet.put("kieli", "Lisäys epäonnistui. Julkaisukieli " + enintaanKaksisataa());
         } else {
             virheet.remove("kieli");
         }
@@ -103,14 +104,14 @@ public class Kirja extends Kyselytoiminnot {
         this.julkaisuvuosi = Integer.parseInt(vuosi);
         virheet.remove("vuosi");
         } catch (NumberFormatException e) {
-            virheet.put("vuosi", "Julkaisuvuoden on oltava kokonaisluku.");
+            virheet.put("vuosi", "Lisäys epäonnistui. Julkaisuvuoden on oltava kokonaisluku.");
         }
     }
 
     public void setSuomentaja(String suomentaja) {
         this.suomentaja = suomentaja.trim();
         if (suomentaja.trim().length() >= 200) {
-            virheet.put("suomentaja", "Suomentajan nimi " + enintaanKaksisataa());
+            virheet.put("suomentaja", "Lisäys epäonnistui. Suomentajan nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("suomentaja");
         }

@@ -44,8 +44,8 @@
         </div>
         <div class="col-md-offset-1">
         </div>
-        <div class="modal fade" id="openCritiquField" tabindex="-1" role="dialog"
-             aria-labelledby="addCritique">
+        <div class="modal fade" id="avaaKritiikkiKenttä" tabindex="-1" role="dialog"
+             aria-labelledby="avaaKritiiki">
             <div class="modal-dialog modal-lg" role="form">
                 <div class="modal-content">
                     <div class="modal-header">
