@@ -193,6 +193,27 @@ public class Kirja extends Kyselytoiminnot {
         }
         return k;
     }
+    
+    public void paivitaKirjanTiedot(int id, String nimi, String kirjailija, int julkaisuvuosi,
+            String julkaisukieli, String suomentaja) {
+        Kirja kirja = new Kirja();
+        try {
+            String sql = "UPDATE kirjat SET nimi = ?, kirjailija = ?, julkaisuvuosi = ?,"
+                    + "julkaisukieli = ?, suomentaja = ? WHERE id = ?";
+            alustaKysely(sql);
+            statement.setInt(6, id);
+            statement.setString(1, nimi);
+            statement.setString(2, kirjailija);
+            statement.setInt(3, julkaisuvuosi);
+            statement.setString(4, julkaisukieli);
+            statement.setString(5, suomentaja);
+                } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+                } finally {
+            lopeta();
+        }
+    } 
 
     public Kirja haeKirjaJaPisteet(int id) {
         Kirja kirja = new Kirja();

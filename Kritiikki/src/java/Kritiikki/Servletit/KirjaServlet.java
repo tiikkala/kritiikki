@@ -17,19 +17,17 @@ public class KirjaServlet extends YleisServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        PrintWriter out = luoPrintWriter(response);
         int id = haeId(request);
         Kirja k = new Kirja().haeKirjaJaPisteet(id);
         request.setAttribute("kirja", k);
-
-        PrintWriter out = luoPrintWriter(response);
         try {
             paivitaIlmoitus(request);
             naytaJSP("kirja", request, response);
         } finally {
             out.close();
         }
-    }
+    }        
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

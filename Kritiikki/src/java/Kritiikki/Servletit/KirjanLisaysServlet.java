@@ -19,20 +19,15 @@ public class KirjanLisaysServlet extends YleisServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         Kirja uusiKirja = new Kirja();
-
         PrintWriter out = luoPrintWriter(response);
-
         try {
-
             String nimi = haeStringArvo("nimi", request);
             String kirjailija = haeStringArvo("kirjailija", request);
             String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
             String julkaisukieli = haeStringArvo("julkaisukieli", request);
             String suomentaja = haeStringArvo("suomentaja", request);
             String pisteet = haeStringArvo("pisteet", request);
-
             uusiKirja.setNimi(nimi);
             uusiKirja.setKirjailja(kirjailija);
             uusiKirja.setJulkaisuvuosi(julkaisuvuosi);
@@ -40,13 +35,12 @@ public class KirjanLisaysServlet extends YleisServlet {
             uusiKirja.setSuomentaja(suomentaja);
             // pisteiden lisääminen kantaan täytyy miettiä,
             // ne menevät eri tauluun
-
             if (uusiKirja.onkoKelvollinen()) {
                 uusiKirja.lisaaKantaan();
                 ohjaaSivulle("Etusivu", response);
-                request.getSession().setAttribute("ilmoitus", "Kirja lisätty onnistuneesti.");
+                request.getSession().setAttribute("ilmoitus", "Kirjan lisäys onnistui.");
             } else {
-                Collection<String> virheet = uusiKirja.getVirheet();
+                Collection<String> virheet = uusiKirja.getVirheet();                
                 String ilmoitus = virheet.iterator().next();
                 request.setAttribute("ilmoitus", ilmoitus);
                 request.setAttribute("kirja", uusiKirja);

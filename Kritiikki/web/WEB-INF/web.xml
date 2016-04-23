@@ -36,6 +36,10 @@
         <servlet-name>KirjanLisaysServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.KirjanLisaysServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KirjanMuokkausServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjanMuokkausServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>KirjanLisaysServlet</servlet-name>
         <url-pattern>/KirjanLisays</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KirjanMuokkausServlet</servlet-name>
+        <url-pattern>/KirjanMuokkaus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
