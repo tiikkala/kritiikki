@@ -10,6 +10,7 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-theme.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
+        <link href="omatMuotoilut.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/readmore.js" type="text/javascript"></script>
