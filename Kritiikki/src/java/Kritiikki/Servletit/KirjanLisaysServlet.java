@@ -31,7 +31,7 @@ public class KirjanLisaysServlet extends YleisServlet {
             uusiKirja.setNimi(nimi);
             uusiKirja.setKirjailja(kirjailija);
             uusiKirja.setJulkaisuvuosi(julkaisuvuosi);
-            uusiKirja.setJulkaisuKieli(julkaisukieli);
+            uusiKirja.setJulkaisukieli(julkaisukieli);
             uusiKirja.setSuomentaja(suomentaja);
             // pisteiden lisääminen kantaan täytyy miettiä,
             // ne menevät eri tauluun

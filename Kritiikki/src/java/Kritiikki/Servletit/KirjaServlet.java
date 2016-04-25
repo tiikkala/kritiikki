@@ -21,6 +21,7 @@ public class KirjaServlet extends YleisServlet {
         int id = haeId(request);
         Kirja k = new Kirja().haeKirjaJaPisteet(id);
         request.setAttribute("kirja", k);
+        talletaSessionId(request, id);
         try {
             paivitaIlmoitus(request);
             naytaJSP("kirja", request, response);

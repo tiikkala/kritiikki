@@ -58,11 +58,11 @@ public class Kirja extends Kyselytoiminnot {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public boolean onkoKelvollinen() {
         return this.virheet.isEmpty();
     }
-    
+
     public Collection<String> getVirheet() {
         return this.virheet.values();
     }
@@ -90,7 +90,7 @@ public class Kirja extends Kyselytoiminnot {
         }
     }
 
-    public void setJulkaisuKieli(String kieli) {
+    public void setJulkaisukieli(String kieli) {
         this.julkaisukieli = kieli.trim();
         if (kieli.trim().length() >= 200) {
             virheet.put("kieli", "Lisäys epäonnistui. Julkaisukieli " + enintaanKaksisataa());
@@ -101,8 +101,8 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setJulkaisuvuosi(String vuosi) {
         try {
-        this.julkaisuvuosi = Integer.parseInt(vuosi);
-        virheet.remove("vuosi");
+            this.julkaisuvuosi = Integer.parseInt(vuosi);
+            virheet.remove("vuosi");
         } catch (NumberFormatException e) {
             virheet.put("vuosi", "Lisäys epäonnistui. Julkaisuvuoden on oltava kokonaisluku.");
         }
@@ -184,7 +184,7 @@ public class Kirja extends Kyselytoiminnot {
             k.setNimi(results.getString("nimi"));
             k.setKirjailja(results.getString("kirjailija"));
             k.setJulkaisuvuosi(Integer.toString(results.getInt("julkaisuvuosi")));
-            k.setJulkaisuKieli(results.getString("julkaisukieli"));
+            k.setJulkaisukieli(results.getString("julkaisukieli"));
             k.setSuomentaja(results.getString("suomentaja"));
             k.setPisteet(results.getDouble("pisteet"));
         } catch (SQLException e) {
@@ -193,10 +193,9 @@ public class Kirja extends Kyselytoiminnot {
         }
         return k;
     }
-    
+
     public void paivitaKirjanTiedot(int id, String nimi, String kirjailija, int julkaisuvuosi,
             String julkaisukieli, String suomentaja) {
-        Kirja kirja = new Kirja();
         try {
             String sql = "UPDATE kirjat SET nimi = ?, kirjailija = ?, julkaisuvuosi = ?,"
                     + "julkaisukieli = ?, suomentaja = ? WHERE id = ?";
@@ -207,13 +206,28 @@ public class Kirja extends Kyselytoiminnot {
             statement.setInt(3, julkaisuvuosi);
             statement.setString(4, julkaisukieli);
             statement.setString(5, suomentaja);
-                } catch (SQLException e) {
+            suoritaKysely();
+        } catch (SQLException e) {
             Logger.getLogger(Kayttaja.class
                     .getName()).log(Level.SEVERE, null, e);
-                } finally {
+        } finally {
             lopeta();
         }
-    } 
+    }
+
+    public void poistaKirja(int id) {
+        try {
+            String sql = "DELETE FROM kirjat WHERE id = ?";
+            alustaKysely(sql);
+            statement.setInt(1, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
 
     public Kirja haeKirjaJaPisteet(int id) {
         Kirja kirja = new Kirja();
