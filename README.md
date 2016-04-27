@@ -6,10 +6,10 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 
 - [Dokumentaatio](doc/dokumentaatio.pdf)
 
-- [Sovelluksen kirjautumissivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/html-demo/etusivu.html)
+- [Sovelluksen kirjautumissivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki)
 
-- Tunnuksia: karikrtiitikko, sepisepi
-- Salasanoja: kari1234, sepi1234
+- Tunnuksia: karikriitikko, sepisepi
+- Salasanoja: kari1234, seppo1234
 
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
 
