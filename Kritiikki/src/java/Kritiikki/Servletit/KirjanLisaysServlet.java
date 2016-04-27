@@ -19,9 +19,9 @@ public class KirjanLisaysServlet extends YleisServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Kirja uusiKirja = new Kirja();
         PrintWriter out = luoPrintWriter(response);
         try {
+            Kirja uusiKirja = new Kirja();
             String nimi = haeStringArvo("nimi", request);
             String kirjailija = haeStringArvo("kirjailija", request);
             String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
@@ -40,7 +40,7 @@ public class KirjanLisaysServlet extends YleisServlet {
                 ohjaaSivulle("Etusivu", response);
                 request.getSession().setAttribute("ilmoitus", "Kirjan lisäys onnistui.");
             } else {
-                Collection<String> virheet = uusiKirja.getVirheet();                
+                Collection<String> virheet = uusiKirja.getVirheet();
                 String ilmoitus = virheet.iterator().next();
                 request.setAttribute("ilmoitus", ilmoitus);
                 request.setAttribute("kirja", uusiKirja);

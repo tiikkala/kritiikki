@@ -74,7 +74,7 @@ public class Kirja extends Kyselytoiminnot {
         } else {
             virheet.remove("nimi");
         }
-        if (nimi.trim().length() >= 200) {
+        if (nimi.trim().length() > 200) {
             virheet.put("nimi", "Lisäys epäonnistui. Nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("nimi");
@@ -83,7 +83,7 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setKirjailja(String kirjailija) {
         this.kirjailija = kirjailija.trim();
-        if (kirjailija.trim().length() >= 200) {
+        if (kirjailija.trim().length() > 200) {
             virheet.put("kirjailija", "Lisäys epäonnistui. Kirjailijan nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("kirjailija");
@@ -92,7 +92,7 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setJulkaisukieli(String kieli) {
         this.julkaisukieli = kieli.trim();
-        if (kieli.trim().length() >= 200) {
+        if (kieli.trim().length() > 200) {
             virheet.put("kieli", "Lisäys epäonnistui. Julkaisukieli " + enintaanKaksisataa());
         } else {
             virheet.remove("kieli");
@@ -110,7 +110,7 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setSuomentaja(String suomentaja) {
         this.suomentaja = suomentaja.trim();
-        if (suomentaja.trim().length() >= 200) {
+        if (suomentaja.trim().length() > 200) {
             virheet.put("suomentaja", "Lisäys epäonnistui. Suomentajan nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("suomentaja");
@@ -177,7 +177,7 @@ public class Kirja extends Kyselytoiminnot {
     /**
      * Luo seuraavana "results":ssa olevan Kirjan pisteineen.
      */
-    public Kirja palautaKirjaJaPisteet() {
+    private Kirja palautaKirjaJaPisteet() {
         Kirja k = new Kirja();
         try {
             k.setId(results.getInt("id"));

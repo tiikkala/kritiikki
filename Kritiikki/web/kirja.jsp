@@ -130,18 +130,18 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form role="form">
+                                        <form role="form" id="kritiikinLisays" action="KritiikinLisays" method="POST">
                                             <div class="form-group col-xs-12">
                                                 <label for="otsikko">Otsikko</label>
-                                                <input type="text" class="form-control" id="otsikko">
+                                                <input type="text" class="form-control" id="otsikko" required name="otsikko">
                                                 <label for="kritiikki">Leip‰teksti</label>
-                                                <textarea class="form-control" rows="30" id="kritiikki"></textarea>
+                                                <textarea class="form-control" rows="30" id="kritiikki" required name="teksti"></textarea>
                                             </div>                            
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
-                                        <button type="submit" class="btn btn-primary">Tallenna</button>
+                                        <button type="submit" form="kritiikinLisays" class="btn btn-primary">Tallenna</button>
                                     </div>
                                 </div><!--.modal-body-->
                             </div><!--.modal-content-->
@@ -150,52 +150,25 @@
                     </div><!-- container -->
                     <div class="help-block"></div>
                     <div class="container">
-                        <div class="row">
-                            <div class = "col-xs-12">
-                                <div class="panel-group" id="kritiikit">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" id="heading">
-                                            <h4 class="panel-title">Kritiikin kirjoittaja, p‰iv‰m‰‰r‰</h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <h5>Otsikko</h5>
-                                            <article><p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson 
-                                                    ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. 
-                                                    Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua 
-                                                    put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente 
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft 
-                                                    beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't 
-                                                    heard of them accusamus labore sustainable VHS.Anim pariatur cliche reprehenderit, 
-                                                    enim eiusmod high life accusamus terry richardson ad squid.
-                                                    3 wolf moon officia aute, non cupidatat skateboard dolor brunch. 
-                                                    Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua 
-                                                    put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente 
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft 
-                                                    beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't 
-                                                    heard of them accusamus labore sustainable VHS.Anim pariatur cliche reprehenderit, 
-                                                    enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, 
-                                                    non cupidatat skateboard dolor brunch.</p> 
-                                                <p>Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua 
-                                                    put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente 
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft 
-                                                    beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't 
-                                                    heard of them accusamus labore sustainable VHS.Anim pariatur cliche reprehenderit, 
-                                                    enim eiusmod high life accusamus terry richardson ad squid.
-                                                    3 wolf moon officia aute, non cupidatat skateboard dolor brunch. 
-                                                    Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua 
-                                                    put a bird on it squid single-origin coffee nulla assumenda shoreditch et. 
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente 
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft 
-                                                    beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't 
-                                                    heard of them accusamus labore sustainable VHS.</p></article>
+                        <c:forEach items="${kritiikit}" var="kritiikki">
+                            <div class="row">
+                                <div class = "col-xs-12">
+                                    <div class="panel-group" id="kritiikit">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" id="heading">
+                                                <h4 class="panel-title"><c:out value="${kritiikki.kirjoittaja}, ${kritiikki.paivays}"/></h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h5><c:out value="${kritiikki.otsikko}"/></h5>
+                                                <article>
+                                                    <p><c:out value="${kritiikki.teksti}"/></p>
+                                                </article>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div><!-- container -->
                     <script>$("article").readmore({
                             collapsedHeight: 120,

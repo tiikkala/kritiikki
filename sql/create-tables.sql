@@ -23,7 +23,8 @@ kirjaId INTEGER REFERENCES kirjat ON DELETE cascade
 kirjoittaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
 					      ON UPDATE cascade,
 teksti VARCHAR(100000) NOT NULL,
-otsikko VARCHAR(300) NOT NULL
+otsikko VARCHAR(300) NOT NULL,
+paivays DATE
 );
 
 CREATE TABLE kommentit
@@ -33,7 +34,8 @@ kritiikkiId INTEGER REFERENCES kritiikit ON DELETE cascade
 			  	         ON UPDATE cascade,
 kirjoittaja VARCHAR(100) REFERENCES kayttajat ON DELETE cascade
 					     ON UPDATE cascade,
-teksti VARCHAR(10000) NOT NULL
+teksti VARCHAR(10000) NOT NULL,
+paivays TIMESTAMP(0)
 );
 
 CREATE TABLE pisteet

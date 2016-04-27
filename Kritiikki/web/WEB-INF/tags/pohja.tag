@@ -34,9 +34,9 @@
             <c:if test="${kirjautunut != null}">
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/Kritiikki/etusivu">Etusivu</a></li>
-                        <li><a href="/Kritiikki/uutiset">Uutiset</a></li>
-                        <li><a href="/Kritiikki/profiili">Profiili</a></li>
+                        <li class="active"><a href="/Kritiikki/Etusivu">Etusivu</a></li>
+                        <li><a href="/Kritiikki/Uutiset">Uutiset</a></li>
+                        <li><a href="/Kritiikki/Profiili">Profiili</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/Kritiikki/Uloskirjautuminen"><span class="glyphicon glyphicon-log-out"></span>Kirjaudu ulos</a></li>
