@@ -238,7 +238,7 @@ public class Kirja extends Kyselytoiminnot {
                     + "kirjat.id = pisteet.kirjaId WHERE kirjat.id = ? GROUP BY "
                     + "kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
                     + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
-                    + "pisteet.pisteet ORDER BY pisteet.pisteet";
+                    + "pisteet.pisteet";
             alustaKysely(sql);
             statement.setInt(1, id);
             suoritaKysely();
@@ -273,7 +273,7 @@ public class Kirja extends Kyselytoiminnot {
                     + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
                     + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
                     + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
-                    + "pisteet.pisteet ORDER BY pisteet.pisteet";
+                    + "pisteet.pisteet ORDER BY pisteet.pisteet DESC";
             alustaKysely(sql);
 //            statement.setInt(1, montako); // nämä sivutusta varten, toteuta aikanaan
 //            statement.setInt(2, (sivu - 1) * montako);

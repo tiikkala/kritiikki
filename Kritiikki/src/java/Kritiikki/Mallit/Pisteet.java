@@ -58,6 +58,9 @@ public class Pisteet extends Kyselytoiminnot {
         return this.kayttaja;
     }
 
+    /**
+     * Luo seuraavana "results":ssa olevan Piste-olion.
+     */
     public Pisteet palautaPisteet() {
         Pisteet p = new Pisteet();
         try {
@@ -71,7 +74,7 @@ public class Pisteet extends Kyselytoiminnot {
         }
         return p;
     }
-    
+
     public boolean onkoKelvollinen() {
         return this.virheet.isEmpty();
     }
@@ -85,7 +88,6 @@ public class Pisteet extends Kyselytoiminnot {
         }
         return false;
     }
-    
 
     public List<Pisteet> haePisteetRiveittain(int kirjaId) {
         List<Pisteet> pisteet = new ArrayList<Pisteet>();

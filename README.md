@@ -14,3 +14,9 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
 
 - [Listausesimerkki](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/KayttajaListausServlet)
+
+**TO DO**
+
+- Uutiset ja profiilisivut kuntoon
+- Käyttäjäoikeuksien hallinta (tietojen poisto kannasta ym.)
+- Rekisteröityminen ja omien tietojen muuttaminen (navbariin erillinen nappi jälkimmäistä varten?)
