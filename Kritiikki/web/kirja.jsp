@@ -103,10 +103,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <form class="form-inline col-xs-12" role="form">
+                            <form class="form-inline col-xs-12" role="form" method="POST" action="PisteidenLisays">
                                 <div class="form-group col-xs-12 col-xs-offset-2">
                                     <label for="points">Arvostele:</label>
-                                    <input type="number" class="form-control" id="points" style="max-width:100px"
+                                    <input type="number" class="form-control" name="pisteet" id="pisteet" style="max-width:100px"
                                            placeholder="4-10">
                                     <button type="submit" class="btn btn-primary">Tallenna</button>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kritiikkikentta">

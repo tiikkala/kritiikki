@@ -48,6 +48,10 @@
         <servlet-name>KritiikinLisaysServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.KritiikinLisaysServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PisteidenLisaysServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.PisteidenLisaysServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>KritiikinLisaysServlet</servlet-name>
         <url-pattern>/KritiikinLisays</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PisteidenLisaysServlet</servlet-name>
+        <url-pattern>/PisteidenLisays</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,7 +1,9 @@
 package Kritiikki.Mallit;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +57,7 @@ public class Pisteet extends Kyselytoiminnot {
     public String getKayttaja() {
         return this.kayttaja;
     }
-    
+
     public Pisteet palautaPisteet() {
         Pisteet p = new Pisteet();
         try {
@@ -63,17 +65,53 @@ public class Pisteet extends Kyselytoiminnot {
             p.setKayttaja(results.getString("kayttaja"));
             p.setKirjaId(results.getInt("kirjaId"));
             p.setPisteet(results.getInt("pisteet"));
-                } catch (SQLException e) {
+        } catch (SQLException e) {
             Logger.getLogger(Kayttaja.class
                     .getName()).log(Level.SEVERE, null, e);
         }
         return p;
     }
     
-    public Pisteet haePisteet(int id) {
+    public boolean onkoKelvollinen() {
+        return this.virheet.isEmpty();
+    }
+
+    public boolean kayttajaOnJoArvostellut(String kayttaja, int kirjaId) {
+        List<Pisteet> pisteet = haePisteetRiveittain(kirjaId);
+        for (Pisteet p : pisteet) {
+            if (p.getKayttaja().equals(kayttaja)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    public List<Pisteet> haePisteetRiveittain(int kirjaId) {
+        List<Pisteet> pisteet = new ArrayList<Pisteet>();
+        try {
+            Pisteet p = new Pisteet();
+            String sql = "SELECT * FROM pisteet WHERE kirjaId = ?";
+            alustaKysely(sql);
+            statement.setInt(1, kirjaId);
+            suoritaKysely();
+            while (results.next()) {
+                p = palautaPisteet();
+                pisteet.add(p);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return pisteet;
+    }
+
+    public Pisteet haePisteidenKeskiarvo(int id) {
         Pisteet pisteet = new Pisteet();
         try {
-            String sql = "SELECT AVG(pisteet) FORM pisteet WHERE kirjaId = ?";
+            String sql = "SELECT AVG(pisteet) FROM pisteet WHERE kirjaId = ?";
             alustaKysely(sql);
             statement.setInt(1, id);
             suoritaKysely();
