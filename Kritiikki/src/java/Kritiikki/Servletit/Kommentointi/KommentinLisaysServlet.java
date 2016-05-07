@@ -1,40 +1,47 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.Kommentointi;
 
 import Kritiikki.Mallit.Kayttaja;
+import Kritiikki.Mallit.Kommentti;
 import Kritiikki.Mallit.Kritiikki;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
- *
- * @author tapio
+ * Toteuttaa kommentin lisäämiseksi tarvittavan toiminnallisuuden.
  */
-public class KritiikinLisaysServlet extends YleisServlet {
+public class KommentinLisaysServlet extends YleisServlet {
 
-    /**
-     * Toteuttaa kritiikin lisäämiseen liittyvän toiminnallisuuden.
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = luoPrintWriter(response);
+        request.setCharacterEncoding("UTF-8");
         try {
-            Kritiikki k = new Kritiikki();
-            //haetaan kirjautunut käyttäjä
-            Kayttaja kirjoittaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
+            Kommentti kommentti = new Kommentti();
             int kirjaId = haeIdSessionilta(request);
-            k.setKirjoittaja(kirjoittaja.getId());
-            k.setOtsikko(haeStringArvo("otsikko", request));
-            k.setTeksti(haeStringArvo("teksti", request));
-            k.setKirjaId(kirjaId);
-            k.lisaaKantaan();
+            Kayttaja kirjoittaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
+            String kayttajaTunnus = kirjoittaja.getId();
+            String teksti = request.getParameter("teksti");
+            int kritiikkiId = Integer.valueOf(request.getParameter("kritiikkiId"));
+            kommentti.setKirjoittaja(kayttajaTunnus);
+            kommentti.setKritiikkiId(kritiikkiId);
+            kommentti.setTeksti(teksti);
             String sivu = "Kirja?id=" + kirjaId;
-            request.getSession().setAttribute("ilmoitus", "Kirjan muokkaus onnistui.");
-            ohjaaSivulle(sivu, response);
+            if (kommentti.onkoKelvollinen() && teksti.trim().length() != 0) {
+                kommentti.lisaaKantaan();
+                ohjaaSivulle(sivu, response);
+            } else {
+                Map<String, String> virheet = kommentti.getVirheet();
+                String ilmoitus = virheet.values().iterator().next();
+                request.setAttribute("ilmoitus", ilmoitus);
+                naytaJSP(sivu, request, response);
+            }
         } finally {
             out.close();
         }

@@ -15,6 +15,7 @@ public class Kayttaja extends Kyselytoiminnot {
     private String id;
     private String salasana;
     private String sposti;
+    private String rooli;
 
     public String getId() {
         return this.id;
@@ -26,6 +27,10 @@ public class Kayttaja extends Kyselytoiminnot {
 
     public String getSposti() {
         return this.sposti;
+    }
+
+    public String getRooli() {
+        return this.rooli;
     }
 
     public void setId(String id) {
@@ -40,35 +45,53 @@ public class Kayttaja extends Kyselytoiminnot {
         this.sposti = sposti;
     }
 
-    public Kayttaja etsiKayttaja(String tunnus, String salasana) {
+    public void setRooli(String rooli) {
+        this.rooli = rooli;
+    }
 
+    /**
+     * Luo seuraavana "results":ssa olevan käyttäjän.
+     *
+     * @return kayttaja
+     */
+    public Kayttaja palautaKayttaja() {
+        Kayttaja kayttaja = new Kayttaja();
         try {
-            String sql = "SELECT id, salasana FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
+            kayttaja.setId(results.getString("id"));
+            kayttaja.setSalasana(results.getString("salasana"));
+            kayttaja.setSposti(results.getString("sposti"));
+            kayttaja.setRooli(results.getString("rooli"));
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        }
+        return kayttaja;
+    }
 
+    public Kayttaja etsiKayttaja(String tunnus, String salasana) {
+        Kayttaja kayttaja = new Kayttaja();
+        try {
+            String sql = "SELECT * FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
             alustaKysely(sql);
             statement.setString(1, tunnus);
             statement.setString(2, salasana);
-
             suoritaKysely();
-
-            Kayttaja kirjautunut = null;
-
             if (results.next()) {
-                kirjautunut = new Kayttaja();
-                kirjautunut.setId(tunnus);
-                kirjautunut.setSalasana(salasana);
+                kayttaja = palautaKayttaja();
+                return kayttaja;
             }
-            return kirjautunut;
         } catch (SQLException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }
+        // Jos käyttäjää ei löydy, palautetaan null, jotta voidaan tarkistaa onko kannassa
+        // kirjautumisessa annettuja tietoja vastaava käyttäjä.
         return null;
     }
 
     public static List<Kayttaja> getKayttajat() throws SQLException {
-                
+
         String sql = "SELECT id, salasana, sposti FROM kayttajat";
         Connection yhteys = Tietokanta.getYhteys();
         PreparedStatement kysely = yhteys.prepareStatement(sql);
@@ -99,4 +122,3 @@ public class Kayttaja extends Kyselytoiminnot {
         return kayttajat;
     }
 }
-

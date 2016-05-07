@@ -1,6 +1,7 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.Kirjautuminen;
 
 import Kritiikki.Mallit.Kayttaja;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,11 +40,9 @@ public class KirjautuminenServlet extends YleisServlet {
                 naytaJSP("kirjautuminen", request, response);
             }
         } finally {
-            if (out != null) {
                 out.close();
             }
         }
-    }
 
     private void kirjauduSisaan(HttpServletRequest request, Kayttaja kayttaja) {
         request.getSession().setAttribute("kirjautunut", kayttaja);

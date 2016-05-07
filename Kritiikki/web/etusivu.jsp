@@ -19,37 +19,37 @@
                             <div class="form-group col-xs-12">
                                 <label for="bookName" class="control-label col-md-3 col-xs-4">Nimi</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="nimi" required value="${kirja.nimi}">
+                                    <input type="text" class="form-control" name="nimi" required value="${kirja.nimi}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="author" class="control-label col-md-3 col-xs-4">Kirjailija</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="kirjailija" value="${kirja.kirjailija}">
+                                    <input type="text" class="form-control" name="kirjailija" value="${kirja.kirjailija}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="year" class="control-label col-md-3 col-xs-4">Julkaisuvuosi</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="julkaisuvuosi">
+                                    <input type="text" class="form-control" name="julkaisuvuosi" value="${kirja.julkaisuvuosi}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="language" class="control-label col-md-3 col-xs-4">Julkaisukieli</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="julkaisukieli" value="${kirja.julkaisukieli}">
+                                    <input type="text" class="form-control" name="julkaisukieli" value="${kirja.julkaisukieli}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="publisher" class="control-label col-md-3 col-xs-4">Suomentaja</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="suomentaja" value="${kirja.suomentaja}">
+                                    <input type="text" class="form-control" name="suomentaja" value="${kirja.suomentaja}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">
                                 <label for="publisher" class="control-label col-md-3 col-xs-4">Pisteet</label>
                                 <div class="col-xs-6">
-                                    <input type="number" class="form-control" name="pisteet">
+                                    <input type="number" class="form-control" name="pisteet" value="=${kirja.pisteet}"/>
                                 </div>                           
                             </div>
                         </form>
@@ -78,9 +78,10 @@
     </div><!-- /.modal -->
     <div class="container">
         <div class="row">
-            <div class="col-xs-3 form-group">
-                <input type="search" class="form-control" placeholder="Hae">              
-            </div>
+            <form class="col-xs-3 form-group" action="Sanahaku" method="POST">
+                <input name="hakusana" class="form-control" placeholder="Hae"/>
+                <input type="submit" style="visibility: hidden;" />
+            </form>
             <div class="col-xs-2">
                 <button type="button" class="btn btn-primary" data-toggle="modal" 
                         data-target="#lisaaKirja">Lis‰‰ kirja</button>
@@ -92,19 +93,19 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nimi</th>
-                    <th>Kirjailija</th>
-                    <th>Julkaisuvuosi</th>
-                    <th>Julkaisukieli</th>
-                    <th>Suomentaja</th>
-                    <th>Pisteet</th>
+                    <th><a href="JarjestaKirjatNimenPerusteella">Nimi</a></th>
+                    <th><a href="JarjestaKirjatKirjailijanPerusteella">Kirjailija</a></th>
+                    <th><a href="JarjestaKirjatJulkaisuvuodenPerusteella"> Julkaisuvuosi</a></th>
+                    <th><a href="JarjestaKirjatJulkaisukielenPerusteella">Julkaisukieli</a></th>
+                    <th><a href="JarjestaKirjatSuomentajanPerusteella">Suomentaja</a></th>
+                    <th><a href="Etusivu">Pisteet</a></th>
                 </tr>
                 <c:forEach items="${kirjat}" var="tieto" varStatus="index">
                     <tr>
                         <td><c:out value="${index.index + 1}"/></td>
                         <td><a href="Kirja?id=${tieto.id}"><c:out value="${tieto.nimi}" default="-"/></a></td>
                         <td><c:out value="${tieto.kirjailija}" default="-"/></td>
-                        <td><c:out value="${tieto.julkaisuvuosi}" default="-"/></td>
+                        <td><c:out value="${tieto.julkaisuvuosi eq 0 ? '-': tieto.julkaisuvuosi}" default="-"/></td>
                         <td><c:out value="${tieto.julkaisukieli}" default="-"/></td>
                         <td><c:out value="${tieto.suomentaja}" default="-"/></td>
                         <td><c:out value="${tieto.pisteet eq 0 ? '-': tieto.pisteet}" default="-"/></td>

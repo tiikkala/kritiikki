@@ -1,6 +1,5 @@
 package Kritiikki.Servletit;
 
-import Kritiikki.Mallit.Kritiikki;
 import Kritiikki.Mallit.Kirja;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,27 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Näyttaa kirjan tiedot ja kirjaan liittyvät kritiikit.
+ *
+ * @author tapio
  */
-public class KirjaServlet extends YleisServlet {
+public class SanahakuServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = luoPrintWriter(response);
-        int id = haeId(request);
-        Kirja k = new Kirja().haeKirjaJaPisteet(id);
-        request.setAttribute("kirja", k);
-        talletaSessionId(request, id);
-        List<Kritiikki> kritiikit = new Kritiikki().haeKritiikitKirjaIdPerusteella(id);
-        request.setAttribute("kritiikit", kritiikit);
+        PrintWriter out = response.getWriter();
         try {
-            paivitaIlmoitus(request);
-            naytaJSP("kirja", request, response);
+            String hakusana = haeStringArvo("hakusana", request);
+            List<Kirja> kirjat = new Kirja().haeKirjatHakusanalla(hakusana);
+            request.setAttribute("kirjat", kirjat);
+            naytaJSP("etusivu", request, response);
         } finally {
             out.close();
         }
-    }        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

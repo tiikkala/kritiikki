@@ -1,44 +1,39 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.ProfiilinNayttaminen;
 
 import Kritiikki.Mallit.Kayttaja;
-import Kritiikki.Mallit.Pisteet;
+import Kritiikki.Mallit.Kirja;
+import Kritiikki.Mallit.Kommentti;
+import Kritiikki.Mallit.Kritiikki;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa pisteiden antamiseen liittyvän logiikan. Jos kayttaja on jo antanut kirjalle pisteet,
- * hänen syöttämänsä pisteet korvaavat vanhan pistemäärän. 
+ * Toteuttaa profiilin näyttämiseen liittyvän logiikan. Hakee listan käyttäjän arvostelmista kirjoista
+ * sekä käyttäjän kirjoittamista kritiikeistä ja kommenteista.
  */
-public class PisteidenLisaysServlet extends YleisServlet {
+public class ProfiiliServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = luoPrintWriter(response);
         try {
-            int pisteet = haeIntArvo("pisteet", request);
             Kayttaja kayttaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
-            String kayttajaId = kayttaja.getId();
-            int kirjaId = haeIdSessionilta(request);
-            Pisteet p = new Pisteet();
-            p.setKirjaId(kirjaId);
-            p.setPisteet(pisteet);
-            p.setKayttaja(kayttajaId);
-            String sivu = "Kirja?id=" + kirjaId;
-            if (p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.muutaPisteita(kirjaId, kayttajaId, pisteet);
-                ohjaaSivulle(sivu, response);
-            }            
-            else if (!p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.lisaaKantaan();
-                ohjaaSivulle(sivu, response);
-            } else {
-                request.getSession().setAttribute("ilmoitus", p.getVirheet().values().iterator().next());
-                ohjaaSivulle(sivu, response);
-            }
+            String kayttajaTunnus = kayttaja.getId();
+            List<Kirja> kirjat = new Kirja().haeKayttajanArvostelematKirjat(kayttajaTunnus);
+            List<Kritiikki> kritiikit = new Kritiikki().haeKayttajanKirjoittamatKritiikit(kayttajaTunnus);
+            List<Kirja> kritikoidutKirjat = new Kirja().haeKayttajanKritikoimatKirjat(kayttajaTunnus);
+            List<Kommentti> kommentit = new Kommentti().haeKayttajanKirjoittamatKommentit(kayttajaTunnus);
+            request.setAttribute("kirjat", kirjat);
+            request.setAttribute("kritiikit", kritiikit);
+            request.setAttribute("kritikoidutKirjat", kritikoidutKirjat);
+            request.setAttribute("kommentit", kommentit);
+            naytaJSP("profiili", request, response);
         } finally {
             out.close();
         }

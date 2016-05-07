@@ -14,27 +14,15 @@ public class EtusivuServlet extends YleisServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
-
-        int montakoKirjaaSivulla = 20;
-        String sivuParametri = request.getParameter("sivu");
-        int sivu = 1;
-
-        // Tarkistetaan, että parametri on olemassa ja että se on numeromuotoinen
-//        if (sivuParametri != null && sivuParametri.matches("\\d+")) {
-//            sivu = Integer.parseInt(sivuParametri);
-//        }
-        
-        Kirja kirja = new Kirja();
-        List<Kirja> kirjat = kirja.haeKirjatJaPisteet();
-        request.setAttribute("kirjat", kirjat);
-        
         PrintWriter out = luoPrintWriter(response);
-
         try {
+            Kirja kirja = new Kirja();
+            List<Kirja> kirjat = kirja.haeKirjatJaPisteet();
+            request.setAttribute("kirjat", kirjat);
             paivitaIlmoitus(request);
             naytaJSP("etusivu", request, response);
         } finally {
-            if (out != null) {
+            {
                 out.close();
             }
         }

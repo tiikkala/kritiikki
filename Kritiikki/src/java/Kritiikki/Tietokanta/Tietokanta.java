@@ -8,6 +8,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+/**
+ * Luokka tietokantayhteyden luomiseen ja palauttamiseen.
+ */
+
 public class Tietokanta {
 
     private static InitialContext cxt;
@@ -28,7 +32,7 @@ public class Tietokanta {
             try {
                 tietokantaYhteys = new Tietokanta();
             } catch (Exception ex) {
-                Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, "Luotiin tietokantaolio", ex);
+                Logger.getLogger(Tietokanta.class.getName()).log(Level.SEVERE, "Luotiin tietokantaolio,", ex);
             }
         }
         return yhteysVarasto.getConnection();

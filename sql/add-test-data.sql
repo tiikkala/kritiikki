@@ -3,7 +3,7 @@ INSERT INTO kirjat VALUES (DEFAULT, 'Rikos ja rangaistus', 'Dostojevski, Fjodor'
 
 INSERT INTO kayttajat VALUES ('karikriitikko', 'kari1234', 'kari.hamalainen@hotmail.com'), ('sepisepi', 'seppo1234', 'seppo.junkkari@yahoo.com');
 
-INSERT INTO kommentit VALUES (DEFAULT, (SELECT id FROM kritiikit WHERE otsikko = 'Lorem ipsum'), (SELECT id FROM kayttajat WHERE id = 'karikriitikko'), 'Äärimmäisen älykäs kommentti', CURRENT_TIMESTAMP(0);
+INSERT INTO kommentit VALUES (DEFAULT, (SELECT id FROM kritiikit WHERE otsikko = 'Lorem ipsum'), 'karikriitikko', 'Äärimmäisen älykäs kommentti', CURRENT_TIMESTAMP(0));
 
 INSERT INTO pisteet VALUES (DEFAULT, 9, (SELECT id FROM kirjat WHERE nimi = 'Neurovelho'), 'sepisepi');
 

@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 public class Kritiikki extends Kyselytoiminnot {
 
     private final Map<String, String> virheet = new HashMap<String, String>();
-
     private int id;
     private int kirjaId;
     private String kirjoittaja;
@@ -48,6 +47,10 @@ public class Kritiikki extends Kyselytoiminnot {
         return this.paivays;
     }
 
+    public Map<String, String> getVirheet() {
+        return this.virheet;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -58,6 +61,10 @@ public class Kritiikki extends Kyselytoiminnot {
 
     public void setPaivays(Date paivays) {
         this.paivays = paivays;
+    }
+
+    public boolean onkoKelvollinen() {
+        return this.virheet.isEmpty();
     }
 
     public void setOtsikko(String otsikko) {
@@ -87,7 +94,7 @@ public class Kritiikki extends Kyselytoiminnot {
             virheet.remove("teksti");
         }
     }
-    
+
     public void setKirjoittaja(String kirjoittaja) {
         this.kirjoittaja = kirjoittaja;
     }
@@ -109,6 +116,25 @@ public class Kritiikki extends Kyselytoiminnot {
                     .getName()).log(Level.SEVERE, null, e);
         }
         return k;
+    }
+
+    public List<Kritiikki> haeKayttajanKirjoittamatKritiikit(String tunnus) {
+        List<Kritiikki> kritiikit = new ArrayList<Kritiikki>();
+        try {
+            String sql = "SELECT * FROM kritiikit WHERE kirjoittaja = ? ORDER BY paivays";
+            alustaKysely(sql);
+            statement.setString(1, tunnus);
+            suoritaKysely();
+            while (results.next()) {
+                kritiikit.add(palautaKritiikki());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kritiikit;
     }
 
     public List<Kritiikki> haeKritiikitKirjaIdPerusteella(int kId) {

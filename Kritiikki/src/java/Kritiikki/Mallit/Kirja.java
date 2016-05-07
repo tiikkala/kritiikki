@@ -1,19 +1,13 @@
 package Kritiikki.Mallit;
 
-import Kritiikki.Tietokanta.Tietokanta;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.NamingException;
 
 /**
  * Malli, joka sisältää tietoa kirjoista ja tekee niiden hakuun liittyviä
@@ -101,7 +95,9 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setJulkaisuvuosi(String vuosi) {
         try {
-            this.julkaisuvuosi = Integer.parseInt(vuosi);
+            if (!vuosi.isEmpty()) {
+                this.julkaisuvuosi = Integer.parseInt(vuosi);
+            }
             virheet.remove("vuosi");
         } catch (NumberFormatException e) {
             virheet.put("vuosi", "Lisäys epäonnistui. Julkaisuvuoden on oltava kokonaisluku.");
@@ -194,6 +190,46 @@ public class Kirja extends Kyselytoiminnot {
         return k;
     }
 
+    public List<Kirja> haeKayttajanKritikoimatKirjat(String kayttaja) {
+        List<Kirja> kirjat = new ArrayList<Kirja>();
+        try {
+            String sql = "SELECT * FROM kritiikit JOIN kirjat ON kritiikit.kirjaId = kirjat.id WHERE "
+                    + "kritiikit.kirjoittaja = ? ORDER BY kritiikit.paivays DESC";
+            alustaKysely(sql);
+            statement.setString(1, kayttaja);
+            suoritaKysely();
+            while (results.next()) {
+                kirjat.add(palautaKirjaJaPisteet());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjat;
+    }
+
+    public List<Kirja> haeKayttajanArvostelematKirjat(String kayttaja) {
+        List<Kirja> kirjat = new ArrayList<Kirja>();
+        try {
+            String sql = "SELECT * FROM pisteet JOIN kirjat ON pisteet.kirjaId = kirjat.id WHERE "
+                    + "pisteet.kayttaja = ? ORDER BY pisteet.pisteet DESC";
+            alustaKysely(sql);
+            statement.setString(1, kayttaja);
+            suoritaKysely();
+            while (results.next()) {
+                kirjat.add(palautaKirjaJaPisteet());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjat;
+    }
+
     public void paivitaKirjanTiedot(int id, String nimi, String kirjailija, int julkaisuvuosi,
             String julkaisukieli, String suomentaja) {
         try {
@@ -256,30 +292,96 @@ public class Kirja extends Kyselytoiminnot {
 
     /**
      * Hakee tietokannasta kirjat ja laskee jokaiselle kirjalle sen saamien
-     * pisteiden keskiarvot.
+     * pisteiden keskiarvot. Kysely järjestää kirjat niiden pistemäärän mukaan
+     * laskevassa järjestyksessä.
      *
-     * @param montako = kuinka monta kirjaa haetaan, sivu = mistä kohtaa kantaa
-     * haku aloitetaan
-     *
-     * @return palauttaa kokoelman tietokannan kirjoista ja niihin liittyvistä
+     * @return palauttaa listan tietokannan kirjoista ja niihin liittyvistä
      * pisteistä
      */
     public List<Kirja> haeKirjatJaPisteet() {
         List<Kirja> kirjat = new ArrayList<Kirja>();
         try {
-            // TO DO: voisko tätä siistiä?
             String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, "
                     + "suomentaja, pisteet.pisteet FROM kirjat LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) "
                     + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
                     + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
                     + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
-                    + "pisteet.pisteet ORDER BY pisteet.pisteet DESC";
+                    + "pisteet.pisteet ORDER BY pisteet.pisteet DESC NULLS LAST";
             alustaKysely(sql);
-//            statement.setInt(1, montako); // nämä sivutusta varten, toteuta aikanaan
-//            statement.setInt(2, (sivu - 1) * montako);
             suoritaKysely();
             while (results.next()) {
-                // luodaan joka riviä vastaava kirja
+                kirjat.add(palautaKirjaJaPisteet());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjat;
+    }
+
+    public List<Kirja> haeKirjatJaJarjestaJulkaisuvuodenPeursteella() {
+        List<Kirja> kirjat = new ArrayList<Kirja>();
+        try {
+            String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, "
+                    + "suomentaja, pisteet.pisteet FROM kirjat LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) "
+                    + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
+                    + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
+                    + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
+                    + "pisteet.pisteet ORDER BY kirjat.julkaisuvuosi DESC NULLS LAST";
+            alustaKysely(sql);
+            suoritaKysely();
+            while (results.next()) {
+                kirjat.add(palautaKirjaJaPisteet());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjat;
+    }
+
+    public List<Kirja> haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella(String attribuutti) {
+        List<Kirja> kirjat = new ArrayList<Kirja>();
+        try {
+            String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, "
+                    + "suomentaja, pisteet.pisteet FROM kirjat LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) "
+                    + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
+                    + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
+                    + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
+                    + "pisteet.pisteet ORDER BY CASE kirjat." + attribuutti
+                    + " WHEN '' THEN 1 ELSE 0 END, kirjat." + attribuutti;
+            alustaKysely(sql);
+            suoritaKysely();
+            while (results.next()) {
+                kirjat.add(palautaKirjaJaPisteet());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjat;
+    }
+
+    public List<Kirja> haeKirjatHakusanalla(String hakusana) {
+        List<Kirja> kirjat = new ArrayList<Kirja>();
+        try {
+            String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, "
+                    + "julkaisukieli, suomentaja, pisteet.pisteet FROM kirjat "
+                    + "LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) AS pisteet FROM "
+                    + "pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
+                    + "WHERE kirjat.nimi ~* '" + hakusana + "' OR kirjat.kirjailija ~* '"
+                    + hakusana + "' GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, "
+                    + "kirjat.julkaisuvuosi, kirjat.julkaisukieli, kirjat.suomentaja, "
+                    + "pisteet.kirjaId, pisteet.pisteet ORDER BY pisteet.pisteet DESC NULLS LAST;";
+            alustaKysely(sql);
+            suoritaKysely();
+            while (results.next()) {
                 kirjat.add(palautaKirjaJaPisteet());
             }
         } catch (SQLException e) {

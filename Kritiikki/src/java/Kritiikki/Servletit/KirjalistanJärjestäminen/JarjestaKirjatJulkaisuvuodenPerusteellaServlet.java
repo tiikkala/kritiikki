@@ -1,28 +1,30 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.KirjalistanJärjestäminen;
 
 import Kritiikki.Mallit.Kirja;
+import Kritiikki.Servletit.YleisServlet;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa kirjan poistamiseen liittyvän toiminnallisuuden.
+ * Listaa kirjat julkaisuvuoden perusteella laksevassa järjestyksessä.
  */
-public class KirjanPoistoServlet extends YleisServlet {
+public class JarjestaKirjatJulkaisuvuodenPerusteellaServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = luoPrintWriter(response);
+        PrintWriter out = response.getWriter();
         try {
-            int id = haeIdSessionilta(request);
-            new Kirja().poistaKirja(id);
-            String sivu = "Kirja?id=" + id;
-            ohjaaSivulle("Etusivu", response);
-            request.getSession().setAttribute("ilmoitus", "Kirjan poistaminen onnistui.");
+            Kirja kirja = new Kirja();
+            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaJulkaisuvuodenPeursteella();
+            request.setAttribute("kirjat", kirjat);
+            naytaJSP("etusivu", request, response);
         } finally {
             out.close();
         }

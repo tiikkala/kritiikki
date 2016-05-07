@@ -1,42 +1,48 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.Kirjatoiminnot;
 
-import Kritiikki.Mallit.Kayttaja;
-import Kritiikki.Mallit.Pisteet;
+import Kritiikki.Mallit.Kirja;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa pisteiden antamiseen liittyvän logiikan. Jos kayttaja on jo antanut kirjalle pisteet,
- * hänen syöttämänsä pisteet korvaavat vanhan pistemäärän. 
+ * Toteuttaa kirjan tietojen muokkaukseen vaativan toiminnallisuuden.
  */
-public class PisteidenLisaysServlet extends YleisServlet {
+public class KirjanMuokkausServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = luoPrintWriter(response);
         try {
-            int pisteet = haeIntArvo("pisteet", request);
-            Kayttaja kayttaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
-            String kayttajaId = kayttaja.getId();
-            int kirjaId = haeIdSessionilta(request);
-            Pisteet p = new Pisteet();
-            p.setKirjaId(kirjaId);
-            p.setPisteet(pisteet);
-            p.setKayttaja(kayttajaId);
-            String sivu = "Kirja?id=" + kirjaId;
-            if (p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.muutaPisteita(kirjaId, kayttajaId, pisteet);
-                ohjaaSivulle(sivu, response);
-            }            
-            else if (!p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.lisaaKantaan();
+            int id = haeIdSessionilta(request);
+            Kirja kirja = new Kirja().haeKirjaJaPisteet(id);
+            String nimi = haeStringArvo("nimi", request);
+            String kirjailija = haeStringArvo("kirjailija", request);
+            String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
+            String julkaisukieli = haeStringArvo("julkaisukieli", request);
+            String suomentaja = haeStringArvo("suomentaja", request);
+            kirja.setNimi(nimi);
+            kirja.setKirjailja(kirjailija);
+            kirja.setJulkaisukieli(nimi);
+            kirja.setJulkaisuvuosi(julkaisuvuosi);
+            kirja.setSuomentaja(suomentaja);
+            int julkaisuvuosiInt = kirja.getJulkaisuvuosi();
+            String sivu = "Kirja?id=" + id;
+            if (kirja.onkoKelvollinen()) {
+                kirja.paivitaKirjanTiedot(id, nimi, kirjailija, julkaisuvuosiInt, julkaisukieli, suomentaja);
+                request.getSession().setAttribute("ilmoitus", "Kirjan muokkaus onnistui.");
                 ohjaaSivulle(sivu, response);
             } else {
-                request.getSession().setAttribute("ilmoitus", p.getVirheet().values().iterator().next());
+                Collection<String> virheet = kirja.getVirheet();
+                String ilmoitus = virheet.iterator().next();
+                request.getSession().setAttribute("ilmoitus", ilmoitus);
                 ohjaaSivulle(sivu, response);
             }
         } finally {
@@ -82,5 +88,4 @@ public class PisteidenLisaysServlet extends YleisServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

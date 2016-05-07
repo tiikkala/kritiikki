@@ -1,44 +1,29 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.KirjalistanJärjestäminen;
 
-import Kritiikki.Mallit.Kayttaja;
-import Kritiikki.Mallit.Pisteet;
+import Kritiikki.Mallit.Kirja;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa pisteiden antamiseen liittyvän logiikan. Jos kayttaja on jo antanut kirjalle pisteet,
- * hänen syöttämänsä pisteet korvaavat vanhan pistemäärän. 
+ * Listaa kirjat julkaisukielen perusteella aakkostettuna.
  */
-public class PisteidenLisaysServlet extends YleisServlet {
+public class JarjestaKirjatJulkaisukielenPerusteellaServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = luoPrintWriter(response);
+        PrintWriter out = response.getWriter();
         try {
-            int pisteet = haeIntArvo("pisteet", request);
-            Kayttaja kayttaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
-            String kayttajaId = kayttaja.getId();
-            int kirjaId = haeIdSessionilta(request);
-            Pisteet p = new Pisteet();
-            p.setKirjaId(kirjaId);
-            p.setPisteet(pisteet);
-            p.setKayttaja(kayttajaId);
-            String sivu = "Kirja?id=" + kirjaId;
-            if (p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.muutaPisteita(kirjaId, kayttajaId, pisteet);
-                ohjaaSivulle(sivu, response);
-            }            
-            else if (!p.kayttajaOnJoArvostellut(kayttajaId, kirjaId) && p.onkoKelvollinen()) {
-                p.lisaaKantaan();
-                ohjaaSivulle(sivu, response);
-            } else {
-                request.getSession().setAttribute("ilmoitus", p.getVirheet().values().iterator().next());
-                ohjaaSivulle(sivu, response);
-            }
+            Kirja kirja = new Kirja();
+            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("julkaisukieli");
+            request.setAttribute("kirjat", kirjat);
+            naytaJSP("etusivu", request, response);
         } finally {
             out.close();
         }

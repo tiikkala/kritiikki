@@ -28,7 +28,7 @@ public class Pisteet extends Kyselytoiminnot {
     public void setPisteet(int pisteet) {
         this.pisteet = pisteet;
         if (this.pisteet < 4 || this.pisteet > 10) {
-            virheet.put("pisteet", "Pisteiden on oltava luku välillä 4-10.");
+            virheet.put("pisteet", "Anna luku välillä 4-10.");
         } else {
             virheet.remove("pisteet");
         }
@@ -56,6 +56,10 @@ public class Pisteet extends Kyselytoiminnot {
 
     public String getKayttaja() {
         return this.kayttaja;
+    }
+    
+    public Map<String, String> getVirheet() {
+        return this.virheet;
     }
 
     /**
@@ -145,4 +149,21 @@ public class Pisteet extends Kyselytoiminnot {
             lopeta();
         }
     }
+
+    public void muutaPisteita(int kirjaId, String kayttaja, int pisteet) {
+        try {
+            String sql = "UPDATE pisteet SET pisteet = ? WHERE kirjaId = ? AND kayttaja = ?";
+            alustaKysely(sql);
+            statement.setInt(1, pisteet);
+            statement.setInt(2, kirjaId);
+            statement.setString(3, kayttaja);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
+
 }

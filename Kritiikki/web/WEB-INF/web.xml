@@ -2,7 +2,7 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <servlet-name>KirjautuminenServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjautuminenServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjautuminen.KirjautuminenServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>YleisServlet</servlet-name>
@@ -18,11 +18,11 @@
     </servlet>
     <servlet>
         <servlet-name>OhjaaKirjautumisSivulleServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.OhjaaKirjautumisSivulleServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjautuminen.OhjaaKirjautumisSivulleServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KirjauduUlosServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjauduUlosServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjautuminen.KirjauduUlosServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KirjalistaServlet</servlet-name>
@@ -30,27 +30,63 @@
     </servlet>
     <servlet>
         <servlet-name>KirjaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjatoiminnot.KirjaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KirjanLisaysServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjanLisaysServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjatoiminnot.KirjanLisaysServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KirjanMuokkausServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjanMuokkausServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjatoiminnot.KirjanMuokkausServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KirjanPoistoServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjanPoistoServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kirjatoiminnot.KirjanPoistoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KritiikinLisaysServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KritiikinLisaysServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kritiikit.KritiikinLisaysServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PisteidenLisaysServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.PisteidenLisaysServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfiiliServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.ProfiilinNayttaminen.ProfiiliServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NaytaKayttajanKritiikitServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.NaytaKayttajanKritiikitServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KommentinLisaysServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kommentointi.KommentinLisaysServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JarjestaKirjatNimenPerusteellaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatNimenPerusteellaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JarjestaKirjatSuomentajanPerusteellaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatSuomentajanPerusteellaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JarjestaKirjatKirjailijanPerusteellaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatKirjailijanPerusteellaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SanahakuServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.SanahakuServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
@@ -103,6 +139,42 @@
     <servlet-mapping>
         <servlet-name>PisteidenLisaysServlet</servlet-name>
         <url-pattern>/PisteidenLisays</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfiiliServlet</servlet-name>
+        <url-pattern>/Profiili</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NaytaKayttajanKritiikitServlet</servlet-name>
+        <url-pattern>/NaytaKayttajanKritiikit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KommentinLisaysServlet</servlet-name>
+        <url-pattern>/KommentinLisays</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JarjestaKirjatNimenPerusteellaServlet</servlet-name>
+        <url-pattern>/JarjestaKirjatNimenPerusteella</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-name>
+        <url-pattern>/JarjestaKirjatJulkaisuvuodenPerusteella</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JarjestaKirjatSuomentajanPerusteellaServlet</servlet-name>
+        <url-pattern>/JarjestaKirjatSuomentajanPerusteella</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JarjestaKirjatKirjailijanPerusteellaServlet</servlet-name>
+        <url-pattern>/JarjestaKirjatKirjailijanPerusteella</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-name>
+        <url-pattern>/JarjestaKirjatJulkaisukielenPerusteella</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SanahakuServlet</servlet-name>
+        <url-pattern>/Sanahaku</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,9 +1,11 @@
-package Kritiikki.Servletit;
+package Kritiikki.Servletit.Kritiikit;
 
+import Kritiikki.Mallit.Kayttaja;
+import Kritiikki.Mallit.Kritiikki;
+import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,38 +15,35 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tapio
  */
-public class TestiServlet extends HttpServlet {
+public class KritiikinLisaysServlet extends YleisServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Toteuttaa kritiikin lisäämiseen liittyvän toiminnallisuuden.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<String> asiat = new ArrayList<String>();
-        asiat.add("Kirahvi");
-        asiat.add("Trumpetti");
-        asiat.add("Jeesus");
-        asiat.add("Parta");
-
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        request.setCharacterEncoding("UTF-8");
+        PrintWriter out = luoPrintWriter(response);
         try {
-            out.println("<html>");
-            out.println("<head><title>Servlet TestiServlet</title></head>");
-            out.println("<body>");
-            out.println("<ul>");
-            for (String asia : asiat) {
-                out.println("<li>" + asia + "</li>");
+            Kritiikki k = new Kritiikki();
+            //haetaan kirjautunut käyttäjä
+            Kayttaja kirjoittaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
+            int kirjaId = haeIdSessionilta(request);
+            k.setKirjoittaja(kirjoittaja.getId());
+            k.setOtsikko(haeStringArvo("otsikko", request));
+            k.setTeksti(haeStringArvo("teksti", request));
+            k.setKirjaId(kirjaId);
+            String sivu = "Kirja?id=" + kirjaId;
+            if (k.onkoKelvollinen()) {
+                k.lisaaKantaan();
+                ohjaaSivulle(sivu, response);
+            } else {
+                Map<String, String> virheet = k.getVirheet();
+                String ilmoitus = virheet.values().iterator().next();
+                request.setAttribute("ilmoitus", ilmoitus);
+                naytaJSP(sivu, request, response);
             }
-            out.println("</ul>");
-            out.println("</body>");
-            out.println("</html>");
         } finally {
             out.close();
         }
