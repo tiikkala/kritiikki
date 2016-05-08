@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author tapio
+ * Toteuttaa etusivun hakutoiminnon.
  */
 public class SanahakuServlet extends YleisServlet {
 
@@ -23,7 +22,12 @@ public class SanahakuServlet extends YleisServlet {
             String hakusana = haeStringArvo("hakusana", request);
             List<Kirja> kirjat = new Kirja().haeKirjatHakusanalla(hakusana);
             request.setAttribute("kirjat", kirjat);
-            naytaJSP("etusivu", request, response);
+            if (kirjat.isEmpty()) {
+                asetaIlmoitus("Haku ei tuottanut yhtään osumaa.", request);
+                ohjaaSivulle("Etusivu", response);
+            } else {
+                naytaJSP("etusivu", request, response);
+            }
         } finally {
             out.close();
         }

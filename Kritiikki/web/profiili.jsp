@@ -33,8 +33,7 @@
                                     <tr>
                                         <td><c:out value="${kritikoidutKirjat[status.index].nimi}"/></td>
                                         <td><c:out value="${kritikoidutKirjat[status.index].kirjailija}" default="-"/></td>
-                                        <td><a href="Kirja?id=${kritikoidutKirjat[status.index].id}">
-                                                <c:out value="${kritiikki.otsikko}"/></a></td>
+                                        <td><a href="Kirja?id=${kritikoidutKirjat[status.index].id}"><c:out value="${kritiikki.otsikko}"/></a></td>
                                     </tr>
                                 </c:if>
                             </c:forEach>

@@ -17,6 +17,9 @@ Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcat
 
 **TO DO**
 
-- Uutiset ja profiilisivut kuntoon
-- Käyttäjäoikeuksien hallinta (tietojen poisto kannasta ym.)
+- Uutiset-sivu: Näyttää uusimmat lisätyt kirjat, kritiikit ja kommentit
+- Katso, että profiilisivun linkit ohjaavat oikeisiin kirjoihin
+- Tee kirjailijasta pakollinen tieto
+- Käyttäjäoikeuksien hallinta (tietojen poisto kannasta ym., adminille kayttajalista ja haku)
 - Rekisteröityminen ja omien tietojen muuttaminen (navbariin erillinen nappi jälkimmäistä varten?)
+- Dokumentaatio
