@@ -15,8 +15,7 @@ import java.util.logging.Logger;
  */
 public class Kirja extends Kyselytoiminnot {
 
-    private Map<String, String> virheet = new HashMap<String, String>();
-
+    private final Map<String, String> virheet = new HashMap<String, String>();
     private int id;
     private String nimi;
     private String kirjailija;
@@ -79,6 +78,8 @@ public class Kirja extends Kyselytoiminnot {
         this.kirjailija = kirjailija.trim();
         if (kirjailija.trim().length() > 200) {
             virheet.put("kirjailija", "Lisäys epäonnistui. Kirjailijan nimi " + enintaanKaksisataa());
+        } else if (kirjailija.trim().length() == 0) {
+            virheet.put(kirjailija, "Lisäys epäonnistui. Lisää kirjalle kirjoittaja.");
         } else {
             virheet.remove("kirjailija");
         }
@@ -151,6 +152,7 @@ public class Kirja extends Kyselytoiminnot {
 
     /**
      * Kertoo, kuinka monta riviä taulussa on.
+     * @return rivien lkm
      */
     public int lukumaara() {
         int lkm = 0;
@@ -193,8 +195,8 @@ public class Kirja extends Kyselytoiminnot {
     public List<Kirja> haeKayttajanKritikoimatKirjat(String kayttaja) {
         List<Kirja> kirjat = new ArrayList<Kirja>();
         try {
-            String sql = "SELECT * FROM kritiikit JOIN kirjat ON kritiikit.kirjaId = kirjat.id WHERE "
-                    + "kritiikit.kirjoittaja = ? ORDER BY kritiikit.paivays DESC";
+            String sql = "SELECT * FROM kirjat JOIN kritiikit ON kritiikit.kirjaId = kirjat.id WHERE "
+                    + "kritiikit.kirjoittaja = ?";
             alustaKysely(sql);
             statement.setString(1, kayttaja);
             suoritaKysely();
@@ -230,7 +232,7 @@ public class Kirja extends Kyselytoiminnot {
         return kirjat;
     }
 
-    public void paivitaKirjanTiedot(int id, String nimi, String kirjailija, int julkaisuvuosi,
+    public void muokkaaKirjanTietoja(int id, String nimi, String kirjailija, int julkaisuvuosi,
             String julkaisukieli, String suomentaja) {
         try {
             String sql = "UPDATE kirjat SET nimi = ?, kirjailija = ?, julkaisuvuosi = ?,"
@@ -253,7 +255,7 @@ public class Kirja extends Kyselytoiminnot {
 
     public void poistaKirja(int id) {
         try {
-            String sql = "DELETE FROM kirjat WHERE id = ?";
+            String sql = "DELETE FROM kirjat WHERE id = ? RETURNING id";
             alustaKysely(sql);
             statement.setInt(1, id);
             suoritaKysely();
@@ -265,6 +267,11 @@ public class Kirja extends Kyselytoiminnot {
         }
     }
 
+    /**
+     * Hakee kannasa kirjan id:n perusteella.
+     * @param id = kirjan in
+     * @return id:ta vastaava kirja 
+     */
     public Kirja haeKirjaJaPisteet(int id) {
         Kirja kirja = new Kirja();
         try {

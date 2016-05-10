@@ -31,7 +31,7 @@ public class KirjautuminenServlet extends YleisServlet {
                 naytaJSP("kirjautuminen", request, response);
                 return;
             }
-            Kayttaja kayttaja = new Kayttaja().etsiKayttaja(id, salasana);
+            Kayttaja kayttaja = new Kayttaja().etsiKayttajaTunnuksenJaSalasananPeruseella(id, salasana);
             if (kayttaja != null) {
                 kirjauduSisaan(request, kayttaja);
                 ohjaaSivulle("Etusivu", response);

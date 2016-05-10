@@ -1,49 +1,41 @@
-package Kritiikki.Servletit.Kirjatoiminnot;
+package Kritiikki.Servletit.Kritiikit;
 
-import Kritiikki.Mallit.Kirja;
+import Kritiikki.Mallit.Kritiikki;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa kirjan tietojen muokkaukseen vaativan toiminnallisuuden.
+ * Toteuttaa kritiikin muokkauksen toiminnallisuuden.
  */
-public class KirjanMuokkausServlet extends YleisServlet {
+public class KritiikinMuokkausServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         PrintWriter out = luoPrintWriter(response);
         try {
-            int id = haeIdSessionilta(request);
-            Kirja kirja = new Kirja().haeKirjaJaPisteet(id);
-            String nimi = haeStringArvo("nimi", request);
-            String kirjailija = haeStringArvo("kirjailija", request);
-            String julkaisuvuosi = haeStringArvo("julkaisuvuosi", request);
-            String julkaisukieli = haeStringArvo("julkaisukieli", request);
-            String suomentaja = haeStringArvo("suomentaja", request);
-            kirja.setNimi(nimi);
-            kirja.setKirjailja(kirjailija);
-            kirja.setJulkaisukieli(nimi);
-            kirja.setJulkaisuvuosi(julkaisuvuosi);
-            kirja.setSuomentaja(suomentaja);
-            int julkaisuvuosiInt = kirja.getJulkaisuvuosi();
-            String sivu = "Kirja?id=" + id;
-            if (kirja.onkoKelvollinen()) {
-                kirja.muokkaaKirjanTietoja(id, nimi, kirjailija, julkaisuvuosiInt, julkaisukieli, suomentaja);
-                request.getSession().setAttribute("ilmoitus", "Kirjan muokkaus onnistui.");
-                ohjaaSivulle(sivu, response);
+            int kirjaId = haeIdSessionilta(request);
+            int kritiikkiId = haeIntArvo("kritiikkiId", request);
+            Kritiikki muokattavaKritiikki = new Kritiikki().haeKritiikki(kritiikkiId);
+            String otsikko = haeStringArvo("otsikko", request);
+            String teksti = haeStringArvo("teksti", request);
+            muokattavaKritiikki.setOtsikko(otsikko);
+            muokattavaKritiikki.setTeksti(teksti);
+            String sivu = "Kirja?id=" + kirjaId;
+            if (muokattavaKritiikki.onkoKelvollinen()) {              
+                muokattavaKritiikki.muokkaaKritiikkia(kritiikkiId, teksti, otsikko);
+                request.getSession().setAttribute("ilmoitus", "Kritiikin muokkaus onnistui.");
+                naytaJSP(sivu, request, response);
             } else {
-                Collection<String> virheet = kirja.getVirheet();
+                Collection<String> virheet = muokattavaKritiikki.getVirheet().values();
                 String ilmoitus = virheet.iterator().next();
                 request.getSession().setAttribute("ilmoitus", ilmoitus);
-                ohjaaSivulle(sivu, response);
+                naytaJSP(sivu, request, response);
             }
         } finally {
             out.close();
@@ -88,4 +80,5 @@ public class KirjanMuokkausServlet extends YleisServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

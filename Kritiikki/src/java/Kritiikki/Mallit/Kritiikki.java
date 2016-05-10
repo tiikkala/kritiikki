@@ -75,7 +75,7 @@ public class Kritiikki extends Kyselytoiminnot {
             virheet.remove("otsikko");
         }
         if (otsikko.trim().length() > 300) {
-            virheet.put("otsikko", "Otsikko saa olla enintään 300 merkkiä pitkä.");
+            virheet.put("otsikko", "Kritiikin otsikko saa olla enintään 300 merkkiä pitkä.");
         } else {
             virheet.remove("otsikko");
         }
@@ -89,7 +89,7 @@ public class Kritiikki extends Kyselytoiminnot {
             virheet.remove("teksti");
         }
         if (teksti.trim().length() > 100000) {
-            virheet.put("teksti", "Teksti saa olla enintään 100 000 merkkiä pitkä.");
+            virheet.put("teksti", "Kritiikin leipäeksti saa olla enintään 100 000 merkkiä pitkä.");
         } else {
             virheet.remove("teksti");
         }
@@ -116,6 +116,55 @@ public class Kritiikki extends Kyselytoiminnot {
                     .getName()).log(Level.SEVERE, null, e);
         }
         return k;
+    }
+
+    public Kritiikki haeKritiikki(int id) {
+        Kritiikki k = new Kritiikki();
+        try {
+            String sql = "SELECT * FROM kritiikit WHERE id = ?";
+            alustaKysely(sql);
+            statement.setInt(1, id);
+            suoritaKysely();
+            while (results.next()) {
+                k = palautaKritiikki();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return k;
+    }
+
+    public void poistaKritiikki(int id) {
+        try {
+            String sql = "DELETE FROM kritiikit WHERE id = ? RETURNING id";
+            alustaKysely(sql);
+            statement.setInt(1, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
+
+    public void muokkaaKritiikkia(int id, String teksti, String otsikko) {
+        try {
+            String sql = "UPDATE kritiikit SET teksti = ?, otsikko = ? WHERE id = ? RETURNING id";
+            alustaKysely(sql);
+            statement.setString(1, teksti);
+            statement.setString(2, otsikko);
+            statement.setInt(3, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
     }
 
     public List<Kritiikki> haeKayttajanKirjoittamatKritiikit(String tunnus) {
@@ -169,7 +218,8 @@ public class Kritiikki extends Kyselytoiminnot {
             results.next();
             this.id = results.getInt(1);
         } catch (SQLException ex) {
-            Logger.getLogger(Kirja.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Kirja.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }

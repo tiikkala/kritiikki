@@ -30,7 +30,7 @@ public class KirjaServlet extends YleisServlet {
         talletaSessionId(request, id);
         // haetaan kirjaan liittyvät kritiikit
         List<Kritiikki> kritiikit = new Kritiikki().haeKritiikitKirjaIdPerusteella(id);   
-        // haetaan kritiikkiin liittyvät kommentit
+        // haetaan kritiikkeihin liittyvät kommentit
         Map <Integer, List<Kommentti>> kommentit = haeKritiikkeihinLiittyvatKommentit(kritiikit);
         request.setAttribute("kommentit", kommentit);
         request.setAttribute("kritiikit", kritiikit);

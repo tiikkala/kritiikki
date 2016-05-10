@@ -25,7 +25,7 @@
                             <div class="form-group col-xs-12">
                                 <label for="author" class="control-label col-md-3 col-xs-4">Kirjailija</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="kirjailija" value="${kirja.kirjailija}"/>
+                                    <input type="text" class="form-control" name="kirjailija" required value="${kirja.kirjailija}"/>
                                 </div>                           
                             </div>
                             <div class="form-group col-xs-12">

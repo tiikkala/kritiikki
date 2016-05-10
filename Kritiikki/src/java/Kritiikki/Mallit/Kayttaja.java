@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Kayttaja extends Kyselytoiminnot {
 
+    private final Map<String, String> virheet = new HashMap();
     private String id;
     private String salasana;
     private String sposti;
@@ -34,19 +37,46 @@ public class Kayttaja extends Kyselytoiminnot {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id.trim();
+        if (this.id.length() > 100) {
+            virheet.put("tunnus", "Käyttäjätunnuksen maksimipituus on sata merkkiä.");
+        } else if (!onkoTunnusVapaa(this.id)) {
+            virheet.put("tunnus", "Tunnus on jo käytössä. Valitse toinen käyttäjätunnus.");
+        } else {
+            virheet.remove("tunnus");
+        }
     }
 
     public void setSalasana(String salasana) {
         this.salasana = salasana;
+        if (this.salasana.length() > 50) {
+            virheet.put("salasana", "Salasana ei saa olla yli 50 merkkiä pitkä.");
+        } else if (this.salasana.length() < 8) {
+            virheet.put("salasana", "Salasanan täytyy olla vähintään 8 merkkiä pitkä.");
+        } else {
+            virheet.remove("salasana");
+        }
     }
 
     public void setSposti(String sposti) {
-        this.sposti = sposti;
+        this.sposti = sposti.trim();
+        if (this.sposti.length() > 100) {
+            virheet.put("sposti", "Sähköpostiosoite ei saa olla yli 100 merkkiä pitkä.");
+        } else {
+            virheet.remove("sposti");
+        }
     }
 
     public void setRooli(String rooli) {
         this.rooli = rooli;
+    }
+
+    public Map<String, String> getVirheet() {
+        return this.virheet;
+    }
+
+    public boolean onkoKelvollinen() {
+        return this.virheet.isEmpty();
     }
 
     /**
@@ -68,8 +98,48 @@ public class Kayttaja extends Kyselytoiminnot {
         return kayttaja;
     }
 
-    public Kayttaja etsiKayttaja(String tunnus, String salasana) {
-        Kayttaja kayttaja = new Kayttaja();
+    public void lisaaKantaan() {
+        try {
+            String sql = "INSERT INTO kayttajat (id, salasana, sposti, rooli) VALUES("
+                    + "?, ?, ?, 'kayttaja') RETURNING id";
+            alustaKysely(sql);
+            statement.setString(1, this.getId());
+            statement.setString(2, this.getSalasana());
+            statement.setString(3, this.getSposti());
+            suoritaKysely();
+        } catch (SQLException ex) {
+            Logger.getLogger(Kirja.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lopeta();
+        }
+    }
+
+    public boolean onkoTunnusVapaa(String tunnus) {
+        if (etsiKayttajaTunnuksenPerusteella(tunnus) != null) {
+            return false;
+        }
+        return true;
+    }
+
+    public Kayttaja etsiKayttajaTunnuksenPerusteella(String tunnus) {
+        try {
+            String sql = "SELECT * FROM kayttajat WHERE id = ? LIMIT 1";
+            alustaKysely(sql);
+            statement.setString(1, tunnus);
+            suoritaKysely();
+            if (results.next()) {
+                Kayttaja kayttaja = palautaKayttaja();
+                return kayttaja;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lopeta();
+        }
+        return null;
+    }
+
+    public Kayttaja etsiKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
             alustaKysely(sql);
@@ -77,7 +147,7 @@ public class Kayttaja extends Kyselytoiminnot {
             statement.setString(2, salasana);
             suoritaKysely();
             if (results.next()) {
-                kayttaja = palautaKayttaja();
+                Kayttaja kayttaja = palautaKayttaja();
                 return kayttaja;
             }
         } catch (SQLException ex) {

@@ -80,11 +80,11 @@ Ylläpitäjä etsii etusivulta kirjan, jonka tietoja hän haluaa muokata. Hän k
 |----------------------+----------------------+----------------------|
 | <20>                 | <20>                 | <20>                 |
 | Id                   | int                  | Yksilöllinen tunnus  |
-| Nimi                 | Merkkijono, max 300 mer. | Kirjan nimi          |
-| Kirjailija           | Merkkijono, max 300 mer. | Sukunimi, Etunimi    |
+| Nimi                 | Merkkijono, max 100 mer. | Kirjan nimi          |
+| Kirjailija           | Merkkijono, max 100 mer. | Sukunimi, Etunimi    |
 | Julkaisuvuosi        | Merkkijono, max 4 merk. | Julkaisuvuosi, xxxx  |
-| Julkaisukieli        | Merkkijono, max 200 merk. | Teoksen alkuperäiskieli |
-| Suomentaja           | Merrijoon, max 200 merk. | Skukunimi, Etunimi   |
+| Julkaisukieli        | Merkkijono, max 50 merk. | Teoksen alkuperäiskieli |
+| Suomentaja           | Merrijoon, max 100 merk. | Skukunimi, Etunimi   |
 
 #+LATEX: \noindent
 Automaattisesti luotavan Id:nlisäksi kirjan pakollisia attribuutteja on kirjan ja kirjailijan nimi. Muiden attribuuttien arvona voi olla null.
@@ -95,8 +95,8 @@ Automaattisesti luotavan Id:nlisäksi kirjan pakollisia attribuutteja on kirjan 
 | Atrribuutti          | Arvojoukko           | Kuvailu              |
 |----------------------+----------------------+----------------------|
 | <20>                 | <20>                 | <20>                 |
-| Kritiikki            | Merkkijono, max 100 000 merk. | Kritiikiteksti       |
-| Otiskko              | Merkkijono, max 200 merk. | Kritiikin otsikko    |
+| Kritiikki            | Merkkijono, max 10 000 merk. | Kritiikiteksti       |
+| Otiskko              | Merkkijono, max 100 merk. | Kritiikin otsikko    |
 | Id                   | Kokonaisluku         | Yksilöllinen tunnus  |
 
 #+LATEX: \noindent
@@ -108,7 +108,7 @@ Kritiiin attribuutit ovat itse kritiikki, kritiikin otsikko sekä automaattisest
 | Atrribuutti          | Arvojoukko           | Kuvailu              |
 |----------------------+----------------------+----------------------|
 | <20>                 | <20>                 | <20>                 |
-| Kommentti            | Merkkijono, max 10 000 merk. | Kommenttiteksti      |
+| Kommentti            | Merkkijono, max 5000 merk. | Kommenttiteksti      |
 | Id                   | Kokonaisluku         | Yksilöllinen tunnus  |
 
 #+LATEX: \noindent

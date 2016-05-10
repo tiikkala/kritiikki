@@ -88,6 +88,18 @@
         <servlet-name>SanahakuServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.SanahakuServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KritiikinPoistoServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kritiikit.KritiikinPoistoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KritiikinMuokkausServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kritiikit.KritiikinMuokkausServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RekisteroityminenServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.RekisteroityminenServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
@@ -175,6 +187,18 @@
     <servlet-mapping>
         <servlet-name>SanahakuServlet</servlet-name>
         <url-pattern>/Sanahaku</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KritiikinPoistoServlet</servlet-name>
+        <url-pattern>/KritiikinPoisto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KritiikinMuokkausServlet</servlet-name>
+        <url-pattern>/KritiikinMuokkaus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RekisteroityminenServlet</servlet-name>
+        <url-pattern>/Rekisteroityminen</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
