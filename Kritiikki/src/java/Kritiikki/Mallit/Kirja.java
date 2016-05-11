@@ -64,10 +64,7 @@ public class Kirja extends Kyselytoiminnot {
         this.nimi = nimi.trim();
         if (nimi.trim().length() == 0) {
             virheet.put("nimi", "Lisäys epäonnistui. Nimi ei saa olla tyhjä.");
-        } else {
-            virheet.remove("nimi");
-        }
-        if (nimi.trim().length() > 200) {
+        } else if (nimi.trim().length() > 200) {
             virheet.put("nimi", "Lisäys epäonnistui. Nimi " + enintaanKaksisataa());
         } else {
             virheet.remove("nimi");
@@ -152,6 +149,7 @@ public class Kirja extends Kyselytoiminnot {
 
     /**
      * Kertoo, kuinka monta riviä taulussa on.
+     *
      * @return rivien lkm
      */
     public int lukumaara() {
@@ -186,10 +184,30 @@ public class Kirja extends Kyselytoiminnot {
             k.setSuomentaja(results.getString("suomentaja"));
             k.setPisteet(results.getDouble("pisteet"));
         } catch (SQLException e) {
-            Logger.getLogger(Kayttaja.class
-                    .getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, e);
         }
         return k;
+    }
+
+    public Map<Integer, Integer> haeKayttajanKommentoimienKirjojenIdt(String kayttaja) {
+        Map<Integer, Integer> kirjaIdt = new HashMap<Integer, Integer>();
+        try {
+            String sql = "SELECT kirjaId, kritiikkiId FROM kommentit LEFT JOIN "
+                    + "kritiikit ON kommentit.kritiikkiId = kritiikit.id  WHERE "
+                    + "kommentit.kirjoittaja = ?";
+            alustaKysely(sql);
+            statement.setString(1, kayttaja);
+            suoritaKysely();
+            while (results.next()) {
+                kirjaIdt.put(results.getInt("kritiikkiId"), results.getInt("kirjaId"));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kirjaIdt;
     }
 
     public List<Kirja> haeKayttajanKritikoimatKirjat(String kayttaja) {
@@ -201,7 +219,10 @@ public class Kirja extends Kyselytoiminnot {
             statement.setString(1, kayttaja);
             suoritaKysely();
             while (results.next()) {
-                kirjat.add(palautaKirjaJaPisteet());
+                Kirja k = new Kirja();
+                k.setNimi(results.getString("nimi"));
+                k.setKirjailja(results.getString("kirjailija"));
+                kirjat.add(k);
             }
         } catch (SQLException e) {
             Logger.getLogger(Kayttaja.class
@@ -269,8 +290,9 @@ public class Kirja extends Kyselytoiminnot {
 
     /**
      * Hakee kannasa kirjan id:n perusteella.
+     *
      * @param id = kirjan in
-     * @return id:ta vastaava kirja 
+     * @return id:ta vastaava kirja
      */
     public Kirja haeKirjaJaPisteet(int id) {
         Kirja kirja = new Kirja();

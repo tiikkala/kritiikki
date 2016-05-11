@@ -33,6 +33,9 @@ public class RekisteroityminenServlet extends YleisServlet {
                 Collection<String> virheet = uusiKayttaja.getVirheet().values();
                 String ilmoitus = virheet.iterator().next();
                 tallennaIlmoitus(ilmoitus, request);
+                request.setAttribute("id", id);
+                request.setAttribute("salasana", salasana);
+                request.setAttribute("sposti", sposti);
                 ohjaaSivulle("Kirjautuminen", response);
             }
         } finally {

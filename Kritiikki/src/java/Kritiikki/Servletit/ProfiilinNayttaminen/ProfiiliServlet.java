@@ -8,13 +8,15 @@ import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa profiilin näyttämiseen liittyvän logiikan. Hakee listan käyttäjän arvostelmista kirjoista
- * sekä käyttäjän kirjoittamista kritiikeistä ja kommenteista.
+ * Toteuttaa profiilin näyttämiseen liittyvän logiikan. Hakee listan käyttäjän
+ * arvostelmista kirjoista sekä käyttäjän kirjoittamista kritiikeistä ja
+ * kommenteista.
  */
 public class ProfiiliServlet extends YleisServlet {
 
@@ -29,6 +31,8 @@ public class ProfiiliServlet extends YleisServlet {
             List<Kritiikki> kritiikit = new Kritiikki().haeKayttajanKirjoittamatKritiikit(kayttajaTunnus);
             List<Kirja> kritikoidutKirjat = new Kirja().haeKayttajanKritikoimatKirjat(kayttajaTunnus);
             List<Kommentti> kommentit = new Kommentti().haeKayttajanKirjoittamatKommentit(kayttajaTunnus);
+            Map<Integer, Integer> kirjaIdt = new Kirja().haeKayttajanKommentoimienKirjojenIdt(kayttajaTunnus);
+            request.setAttribute("kirjaIdt", kirjaIdt);
             request.setAttribute("kirjat", kirjat);
             request.setAttribute("kritiikit", kritiikit);
             request.setAttribute("kritikoidutKirjat", kritikoidutKirjat);
@@ -39,7 +43,7 @@ public class ProfiiliServlet extends YleisServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

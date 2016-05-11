@@ -38,21 +38,23 @@ public class Kayttaja extends Kyselytoiminnot {
 
     public void setId(String id) {
         this.id = id.trim();
-        if (this.id.length() > 100) {
+        if (id.trim().length() > 100) {
             virheet.put("tunnus", "Käyttäjätunnuksen maksimipituus on sata merkkiä.");
-        } else if (!onkoTunnusVapaa(this.id)) {
-            virheet.put("tunnus", "Tunnus on jo käytössä. Valitse toinen käyttäjätunnus.");
+        } else if (id.isEmpty()) {
+            virheet.put("tunnus", "Anna käyttäjätunnus.");
         } else {
             virheet.remove("tunnus");
         }
     }
 
     public void setSalasana(String salasana) {
-        this.salasana = salasana;
-        if (this.salasana.length() > 50) {
+        this.salasana = salasana.trim();
+        if (salasana.trim().length() > 50) {
             virheet.put("salasana", "Salasana ei saa olla yli 50 merkkiä pitkä.");
-        } else if (this.salasana.length() < 8) {
+        } else if (salasana.trim().length() < 8) {
             virheet.put("salasana", "Salasanan täytyy olla vähintään 8 merkkiä pitkä.");
+        } else if (salasana.trim().isEmpty()) {
+            virheet.put("salasana", "Anna salasana.");
         } else {
             virheet.remove("salasana");
         }
@@ -60,7 +62,7 @@ public class Kayttaja extends Kyselytoiminnot {
 
     public void setSposti(String sposti) {
         this.sposti = sposti.trim();
-        if (this.sposti.length() > 100) {
+        if (sposti.trim().length() > 100) {
             virheet.put("sposti", "Sähköpostiosoite ei saa olla yli 100 merkkiä pitkä.");
         } else {
             virheet.remove("sposti");
@@ -75,7 +77,19 @@ public class Kayttaja extends Kyselytoiminnot {
         return this.virheet;
     }
 
+    /**
+     * Tarkistaa syötteiden oikeellisuuden ja sen, että kellään muulla ole
+     * valittua käyttäjätunnusta käytössä.
+     */
     public boolean onkoKelvollinen() {
+        if (this.virheet.isEmpty()) {
+            if (!onkoTunnusVapaa(this.id)) {
+                virheet.put("tunnus", "Tunnus on jo käytössä. Valitse toinen käyttäjätunnus.");
+                return false;
+            } else {
+                virheet.remove("tunnus");
+            }
+        }
         return this.virheet.isEmpty();
     }
 
@@ -84,7 +98,7 @@ public class Kayttaja extends Kyselytoiminnot {
      *
      * @return kayttaja
      */
-    public Kayttaja palautaKayttaja() {
+    private Kayttaja palautaKayttaja() {
         Kayttaja kayttaja = new Kayttaja();
         try {
             kayttaja.setId(results.getString("id"));
@@ -114,7 +128,7 @@ public class Kayttaja extends Kyselytoiminnot {
         }
     }
 
-    public boolean onkoTunnusVapaa(String tunnus) {
+    private boolean onkoTunnusVapaa(String tunnus) {
         if (etsiKayttajaTunnuksenPerusteella(tunnus) != null) {
             return false;
         }
@@ -122,24 +136,25 @@ public class Kayttaja extends Kyselytoiminnot {
     }
 
     public Kayttaja etsiKayttajaTunnuksenPerusteella(String tunnus) {
+        Kayttaja kayttaja = new Kayttaja();
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? LIMIT 1";
             alustaKysely(sql);
             statement.setString(1, tunnus);
             suoritaKysely();
             if (results.next()) {
-                Kayttaja kayttaja = palautaKayttaja();
-                return kayttaja;
+                kayttaja = palautaKayttaja();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }
-        return null;
+        return kayttaja;
     }
 
     public Kayttaja etsiKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
+        Kayttaja kayttaja = new Kayttaja();
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
             alustaKysely(sql);
@@ -147,17 +162,14 @@ public class Kayttaja extends Kyselytoiminnot {
             statement.setString(2, salasana);
             suoritaKysely();
             if (results.next()) {
-                Kayttaja kayttaja = palautaKayttaja();
-                return kayttaja;
+                kayttaja = palautaKayttaja();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }
-        // Jos käyttäjää ei löydy, palautetaan null, jotta voidaan tarkistaa onko kannassa
-        // kirjautumisessa annettuja tietoja vastaava käyttäjä.
-        return null;
+        return kayttaja;
     }
 
     public static List<Kayttaja> getKayttajat() throws SQLException {

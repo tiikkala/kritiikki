@@ -54,19 +54,19 @@
                                     <div class="form-group col-xs-12">
                                         <label for="kayttajatunnus" class="control-label col-xs-4">Käyttäjätunnus</label>
                                         <div class="col-xs-7 col-xs-offset-1">
-                                            <input type="text" class="form-control" name="id" required/>
+                                            <input type="text" class="form-control" name="id" required value="${id}"/>
                                         </div>                           
                                     </div>
                                     <div class="form-group col-xs-12">
                                         <label for="sahkoposti" class="control-label col-xs-4">Sähköposti</label>
                                         <div class="col-xs-7 col-xs-offset-1">
-                                            <input type="text" class="form-control" name="sposti" required/>
+                                            <input type="text" class="form-control" name="sposti" required value="${sposti}"/>
                                         </div>                           
                                     </div>
                                     <div class="form-group col-xs-12">
                                         <label for="salasana" class="control-label col-xs-4">Salasana</label>
                                         <div class="col-xs-7 col-xs-offset-1">
-                                            <input type="password" class="form-control" name="salasana" required/>
+                                            <input type="password" class="form-control" name="salasana" required value="${salasana}"/>
                                         </div>                           
                                     </div>
                                 </form>

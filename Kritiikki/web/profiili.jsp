@@ -10,8 +10,8 @@
                 <h4>Omat kritiikit ja kommentit</h4>
                 <div class="col-xs-6">
                     <div class="list-group">
-                        <c:forEach items="${kommentit}" var="kommentti">
-                            <a href="#" class="list-group-item active">
+                        <c:forEach items="${kommentit}" var="kommentti" varStatus = "status">
+                            <a href="Kirja?id=${kirjaIdt[kommentti.kritiikkiId]}" class="list-group-item active">
                                 <h5 class="list-group-item-heading">
                                     <c:out value="${kommentti.kirjoittaja}, 
                                            ${kommentti.paivays}"/></h5>

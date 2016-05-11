@@ -90,6 +90,8 @@ public class Kommentti extends Kyselytoiminnot {
         }
         return k;
     }
+    
+    
 
     public List<Kommentti> haeKritiikkiinLittyvatKommentit(int kritiikkiId) {
         List<Kommentti> kommentit = new ArrayList<Kommentti>();
