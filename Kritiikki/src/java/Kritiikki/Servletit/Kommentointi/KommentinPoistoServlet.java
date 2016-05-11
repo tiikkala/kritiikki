@@ -1,50 +1,31 @@
-package Kritiikki.Servletit.ProfiilinNayttaminen;
+package Kritiikki.Servletit.Kommentointi;
 
-import Kritiikki.Mallit.Kayttaja;
-import Kritiikki.Mallit.Kirja;
-import Kritiikki.Mallit.Kommentti;
-import Kritiikki.Mallit.Kritiikki;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Toteuttaa profiilin näyttämiseen liittyvän logiikan. Hakee listan käyttäjän
- * arvostelmista kirjoista sekä käyttäjän kirjoittamista kritiikeistä ja
- * kommenteista.
+ * Toteuttaa kommentin poistamiseen liittyvän toiminnallisuuden.
  */
-public class ProfiiliServlet extends YleisServlet {
+public class KommentinPoistoServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = luoPrintWriter(response);
         try {
-            Kayttaja kayttaja = (Kayttaja) request.getSession().getAttribute("kirjautunut");
-            String kayttajaTunnus = kayttaja.getId();
-            List<Kirja> kirjat = new Kirja().haeKayttajanArvostelematKirjat(kayttajaTunnus);
-            List<Kritiikki> kritiikit = new Kritiikki().haeKayttajanKirjoittamatKritiikit(kayttajaTunnus);
-            List<Kirja> kritikoidutKirjat = new Kirja().haeKayttajanKritikoimatKirjat(kayttajaTunnus);
-            List<Kommentti> kommentit = new Kommentti().haeKayttajanKirjoittamatKommentit(kayttajaTunnus);
-            // Hajautustaulu yhdistää kommentin siihen kirjaa, johon liittyvää kritiikkiä käyttäjä on kommentoinut.
-            Map<Integer, Integer> kirjaIdt = new Kirja().haeKayttajanKommentoimienKirjojenIdt(kayttajaTunnus);
-            request.setAttribute("kirjaIdt", kirjaIdt);
-            request.setAttribute("kirjat", kirjat);
-            request.setAttribute("kritiikit", kritiikit);
-            request.setAttribute("kritikoidutKirjat", kritikoidutKirjat);
-            request.setAttribute("kommentit", kommentit);
-            naytaJSP("profiili", request, response);
+            int kommenttiId = haeIntArvo("id", request);
+            new Kommentti().
         } finally {
             out.close();
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

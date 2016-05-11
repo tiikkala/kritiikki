@@ -100,6 +100,10 @@
         <servlet-name>RekisteroityminenServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.RekisteroityminenServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KommentinPoistoServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kommentointi.KommentinPoistoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
         <url-pattern>/KayttajaListausServlet</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>RekisteroityminenServlet</servlet-name>
         <url-pattern>/Rekisteroityminen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KommentinPoistoServlet</servlet-name>
+        <url-pattern>/KommentinPoistoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

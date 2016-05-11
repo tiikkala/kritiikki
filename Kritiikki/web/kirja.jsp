@@ -177,11 +177,38 @@
                                         <c:if test="${not empty kommentit[kritiikki.id]}">
                                             <c:forEach items="${kommentit[kritiikki.id]}" var="kommentti">
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title"><c:out value="${kommentti.kirjoittaja}, ${kommentti.paivays}"/></h4>
+                                                    <div class="panel-heading clearfix">
+                                                        <h4 class="panel-title pull-left"><c:out value="${kommentti.kirjoittaja}, ${kommentti.paivays}"/></h4>
+                                                        <c:if test="${kirjautunut.rooli eq 'yllapitaja'}">
+                                                            <span class="glyphicon glyphicon-remove active pull-right" style="padding-left: 4px; cursor: pointer;" data-target="#poistaKommentti<c:out value="${status.index}"/>" data-toggle="modal"></span>
+                                                        </c:if>
+                                                        <c:if test="${(kirjautunut.rooli eq 'yllapitaja') || (kirjautunut.id eq kritiikki.kirjoittaja)}">
+                                                            <span class="glyphicon glyphicon-pencil active pull-right" style="cursor: pointer" data-target="#muokkaaKommenttia<c:out value="${status.index}"/>" data-toggle="modal"></span>
+                                                        </c:if>
                                                     </div>
                                                     <div class="panel-body">
                                                         <p><c:out value="${kommentti.teksti}"/></p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="poistaKommentti<c:out value="${kommentti.id}"/>" tabindex="-1" role="dialog"
+                                                     aria-labelldby="Poista">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header"> 
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Ei"><span aria-hidden="true">&times;</span></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Oletko varma, että haluat poistaa kommentin?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form role="form" action="KommentinPoisto" method="POST">
+                                                                    <input type="hidden" name="id" value="${kommentti.id}"/>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Ei</button>
+                                                                    <button type="submit" class="btn btn-danger">Kyllä</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </c:forEach>

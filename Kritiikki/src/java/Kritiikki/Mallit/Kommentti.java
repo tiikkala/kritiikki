@@ -91,7 +91,19 @@ public class Kommentti extends Kyselytoiminnot {
         return k;
     }
     
-    
+    public void poistaKommentti(int id) {
+        try {
+            String sql = "DELETE FROM kommentit WHERE id = ? RETURNING id";
+            alustaKysely(sql);
+            statement.setInt(1, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
 
     public List<Kommentti> haeKritiikkiinLittyvatKommentit(int kritiikkiId) {
         List<Kommentti> kommentit = new ArrayList<Kommentti>();
