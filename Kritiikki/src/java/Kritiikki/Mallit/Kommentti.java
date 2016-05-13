@@ -67,11 +67,11 @@ public class Kommentti extends Kyselytoiminnot {
     public void setKirjoittaja(String kirjoittaja) {
         this.kirjoittaja = kirjoittaja;
     }
-    
+
     public boolean onkoKelvollinen() {
         return this.virheet.isEmpty();
     }
-    
+
     public Map<String, String> getVirheet() {
         return this.virheet;
     }
@@ -90,7 +90,39 @@ public class Kommentti extends Kyselytoiminnot {
         }
         return k;
     }
-    
+
+    public Kommentti haeKommentti(int id) {
+        Kommentti k = new Kommentti();
+        try {
+            String sql = "SELECT * FROM kommentit WHERE id = ?";
+            alustaKysely(sql);
+            statement.setInt(1, id);
+            suoritaKysely();
+            if (results.next()) {
+                k = palautaKommentti();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        }
+        return k;
+    }
+
+    public void muokkaaKommenttia(int id, String teksti) {
+        try {
+            String sql = "UPDATE kommentit SET teksti = ? WHERE id = ?";
+            alustaKysely(sql);
+            statement.setString(1, teksti);
+            statement.setInt(2, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
+
     public void poistaKommentti(int id) {
         try {
             String sql = "DELETE FROM kommentit WHERE id = ? RETURNING id";
@@ -124,7 +156,7 @@ public class Kommentti extends Kyselytoiminnot {
         }
         return kommentit;
     }
-    
+
     public void lisaaKantaan() {
         try {
             String sql = "INSERT INTO kommentit(kritiikkiId, kirjoittaja, teksti, paivays)"

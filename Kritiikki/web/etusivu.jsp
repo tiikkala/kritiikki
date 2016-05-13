@@ -78,7 +78,7 @@
     </div><!-- /.modal -->
     <div class="container">
         <div class="row">
-            <form class="col-xs-3 form-group" action="Sanahaku" method="POST">
+            <form class="col-xs-3 form-group" action="SanahakuKirjoille" method="POST">
                 <input name="hakusana" class="form-control" placeholder="Hae"/>
                 <input type="submit" style="visibility: hidden;" />
             </form>

@@ -1,5 +1,6 @@
 package Kritiikki.Mallit;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,9 +24,14 @@ public class Kirja extends Kyselytoiminnot {
     private String julkaisukieli;
     private String suomentaja;
     private Double pisteet;
+    private Date paivays;
 
     public int getId() {
         return this.id;
+    }
+    
+    public Date getDate() {
+        return this.paivays;
     }
 
     public String getNimi() {
@@ -50,6 +56,10 @@ public class Kirja extends Kyselytoiminnot {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public void setDate(Date paivays) {
+        this.paivays = paivays;
     }
 
     public boolean onkoKelvollinen() {
@@ -130,7 +140,7 @@ public class Kirja extends Kyselytoiminnot {
     public void lisaaKantaan() {
         try {
             String sql = "INSERT INTO kirjat(nimi, kirjailija, julkaisuvuosi, "
-                    + "julkaisukieli, suomentaja) VALUES(?, ?, ?, ?, ?) RETURNING id";
+                    + "julkaisukieli, suomentaja, paivays) VALUES(?, ?, ?, ?, ?, CURRENT_DATE) RETURNING id";
             alustaKysely(sql);
             statement.setString(1, this.getNimi());
             statement.setString(2, this.getKirjailija());
@@ -183,6 +193,7 @@ public class Kirja extends Kyselytoiminnot {
             k.setJulkaisukieli(results.getString("julkaisukieli"));
             k.setSuomentaja(results.getString("suomentaja"));
             k.setPisteet(results.getDouble("pisteet"));
+            k.setDate(results.getDate("paivays"));
         } catch (SQLException e) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -222,6 +233,7 @@ public class Kirja extends Kyselytoiminnot {
                 Kirja k = new Kirja();
                 k.setNimi(results.getString("nimi"));
                 k.setKirjailja(results.getString("kirjailija"));
+                k.setId(results.getInt("id"));
                 kirjat.add(k);
             }
         } catch (SQLException e) {
@@ -298,10 +310,10 @@ public class Kirja extends Kyselytoiminnot {
         Kirja kirja = new Kirja();
         try {
             String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, "
-                    + "suomentaja, pisteet.pisteet FROM kirjat LEFT JOIN (SELECT kirjaId, AVG(pisteet) "
+                    + "suomentaja, paivays, pisteet.pisteet FROM kirjat LEFT JOIN (SELECT kirjaId, AVG(pisteet) "
                     + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON "
                     + "kirjat.id = pisteet.kirjaId WHERE kirjat.id = ? GROUP BY "
-                    + "kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
+                    + "kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.paivays, kirjat.julkaisuvuosi, "
                     + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
                     + "pisteet.pisteet";
             alustaKysely(sql);
@@ -330,10 +342,10 @@ public class Kirja extends Kyselytoiminnot {
     public List<Kirja> haeKirjatJaPisteet() {
         List<Kirja> kirjat = new ArrayList<Kirja>();
         try {
-            String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, "
+            String sql = "SELECT id, nimi, kirjailija, julkaisuvuosi, julkaisukieli, paivays, "
                     + "suomentaja, pisteet.pisteet FROM kirjat LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) "
                     + "AS pisteet FROM pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
-                    + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, "
+                    + "GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, kirjat.julkaisuvuosi, kirjat.paivays, "
                     + "kirjat.julkaisukieli, kirjat.suomentaja, pisteet.kirjaId, "
                     + "pisteet.pisteet ORDER BY pisteet.pisteet DESC NULLS LAST";
             alustaKysely(sql);

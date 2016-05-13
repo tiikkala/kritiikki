@@ -180,16 +180,17 @@
                                                     <div class="panel-heading clearfix">
                                                         <h4 class="panel-title pull-left"><c:out value="${kommentti.kirjoittaja}, ${kommentti.paivays}"/></h4>
                                                         <c:if test="${kirjautunut.rooli eq 'yllapitaja'}">
-                                                            <span class="glyphicon glyphicon-remove active pull-right" style="padding-left: 4px; cursor: pointer;" data-target="#poistaKommentti<c:out value="${status.index}"/>" data-toggle="modal"></span>
+                                                            <span class="glyphicon glyphicon-remove active pull-right" style="padding-left: 4px; cursor: pointer;" data-target="#poistaKommentti<c:out value="${kommentti.id}"/>" data-toggle="modal"></span>
                                                         </c:if>
                                                         <c:if test="${(kirjautunut.rooli eq 'yllapitaja') || (kirjautunut.id eq kritiikki.kirjoittaja)}">
-                                                            <span class="glyphicon glyphicon-pencil active pull-right" style="cursor: pointer" data-target="#muokkaaKommenttia<c:out value="${status.index}"/>" data-toggle="modal"></span>
+                                                            <span class="glyphicon glyphicon-pencil active pull-right" style="cursor: pointer" data-target="#muokkaaKommenttia<c:out value="${kommentti.id}"/>" data-toggle="modal"></span>
                                                         </c:if>
                                                     </div>
                                                     <div class="panel-body">
                                                         <p><c:out value="${kommentti.teksti}"/></p>
                                                     </div>
                                                 </div>
+                                                <div class="help-block"></div>
                                                 <div class="modal fade" id="poistaKommentti<c:out value="${kommentti.id}"/>" tabindex="-1" role="dialog"
                                                      aria-labelldby="Poista">
                                                     <div class="modal-dialog">
@@ -210,6 +211,32 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="modal fade" id="muokkaaKommenttia<c:out value="${kommentti.id}"/>" tabindex="-1" role="dialog"
+                                                     aria-labelledby="Muokkaa kommenttia">
+                                                    <div class="modal-dialog modal-lg" role="form">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Sulje"><span aria-hidden="true">&times;</span></button>               
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <form role="form" id="muokkaaK<c:out value="${kommentti.id}"/>" action="KommentinMuokkaus" method="POST">
+                                                                        <div class="form-group col-xs-12">
+                                                                            <label for="muokkaaKommenttia">Kommentti</label>
+                                                                            <textarea class="form-control" rows="5" id="muokkaaKommenttia" required name="teksti"><c:out value="${kommentti.teksti}"/></textarea>
+                                                                            <input type="hidden" name ="id" value="${kommentti.id}"/>
+                                                                        </div>                            
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
+                                                                    <button type="submit" form="muokkaaK<c:out value="${kommentti.id}"/>" class="btn btn-primary">Tallenna</button>
+                                                                </div>
+                                                            </div><!--.modal-body-->
+                                                        </div><!--.modal-content-->
+                                                    </div><!--.modal-dialog-->
                                                 </div>
                                             </c:forEach>
                                         </c:if>
@@ -260,7 +287,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form role="form" id="kritiikinMuokkaus<c:out value="${status.index}"/>" action="KritiikinMuokkaus" method="POST">
+                                        <form role="form" id="kritiikinMuokkaus" action="KritiikinMuokkaus" method="POST">
                                             <div class="form-group col-xs-12">
                                                 <label for="otsikkoMuokkaus">Otsikko</label>
                                                 <input type="text" class="form-control" id="otsikkoMuokkaus" value="${kritiikki.otsikko}" required name="otsikko"/>

@@ -62,7 +62,7 @@
     </servlet>
     <servlet>
         <servlet-name>KommentinLisaysServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.Kommentointi.KommentinLisaysServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kommentit.KommentinLisaysServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatNimenPerusteellaServlet</servlet-name>
@@ -86,7 +86,7 @@
     </servlet>
     <servlet>
         <servlet-name>SanahakuServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.SanahakuServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.SanahakuKirjoilleServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KritiikinPoistoServlet</servlet-name>
@@ -102,7 +102,11 @@
     </servlet>
     <servlet>
         <servlet-name>KommentinPoistoServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.Kommentointi.KommentinPoistoServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.Kommentit.KommentinPoistoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KommentinMuokkausServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kommentit.KommentinMuokkausServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>KayttajaListausServlet</servlet-name>
@@ -190,7 +194,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SanahakuServlet</servlet-name>
-        <url-pattern>/Sanahaku</url-pattern>
+        <url-pattern>/SanahakuKirjoille</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>KritiikinPoistoServlet</servlet-name>
@@ -206,7 +210,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>KommentinPoistoServlet</servlet-name>
-        <url-pattern>/KommentinPoistoServlet</url-pattern>
+        <url-pattern>/KommentinPoisto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KommentinMuokkausServlet</servlet-name>
+        <url-pattern>/KommentinMuokkaus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

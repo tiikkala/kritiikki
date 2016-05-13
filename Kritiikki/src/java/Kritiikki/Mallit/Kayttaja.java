@@ -154,7 +154,6 @@ public class Kayttaja extends Kyselytoiminnot {
     }
 
     public Kayttaja etsiKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
-        Kayttaja kayttaja = new Kayttaja();
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
             alustaKysely(sql);
@@ -162,14 +161,14 @@ public class Kayttaja extends Kyselytoiminnot {
             statement.setString(2, salasana);
             suoritaKysely();
             if (results.next()) {
-                kayttaja = palautaKayttaja();
+                return palautaKayttaja();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }
-        return kayttaja;
+        return null;
     }
 
     public static List<Kayttaja> getKayttajat() throws SQLException {

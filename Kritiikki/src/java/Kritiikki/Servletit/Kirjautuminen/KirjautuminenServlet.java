@@ -35,9 +35,11 @@ public class KirjautuminenServlet extends YleisServlet {
             if (kayttaja != null) {
                 kirjauduSisaan(request, kayttaja);
                 ohjaaSivulle("Etusivu", response);
+                return;
             } else {
                 asetaIlmoitus("Kirjautuminen epäonnistui! Antamasi tunnus tai salasana on väärä.", request);
                 naytaJSP("kirjautuminen", request, response);
+                return;
             }
         } finally {
                 out.close();

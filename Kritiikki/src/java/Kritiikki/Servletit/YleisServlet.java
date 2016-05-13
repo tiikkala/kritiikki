@@ -29,24 +29,6 @@ public class YleisServlet extends HttpServlet {
         return false;
     }
     
-    protected boolean ohjaaSivulleJosArvoaEiValittu(HttpServletRequest request, HttpServletResponse response, int arvoId, int id, String sivu) {       
-        if (arvoId == 0) {
-            talletaSessionId(request, id);          
-            ohjaaSivulle(sivu, response);
-            return true;
-        }
-        return false;
-    }
-    
-    protected boolean ohjaaSivulleJosArvoaEiValittu(HttpServletRequest request, HttpServletResponse response, String arvo, int id, String sivu) {      
-        if (arvo == null || arvo.isEmpty()) {
-            talletaSessionId(request, id);        
-            ohjaaSivulle(sivu, response);
-            return true;
-        }
-        return false;
-    }
-    
     protected void ohjaaSivulle(String paivitys, HttpServletRequest request, HttpServletResponse response, int id, String sivu) {
         tallennaIlmoitus(paivitys, request);
         talletaSessionId(request, id);           
@@ -91,6 +73,7 @@ public class YleisServlet extends HttpServlet {
     /**
      * Näyttää näkymän.
      * @param sivu = näkymän nimi
+     * @param request
      */   
     protected void naytaJSP(String sivu, HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher = request.getRequestDispatcher(sivu + ".jsp");      
@@ -129,12 +112,17 @@ public class YleisServlet extends HttpServlet {
         request.getSession().setAttribute("id", id);
     }
     
+    /**
+     * Palauttaa sessioniin tallennetun id-arvon.
+     * @param request
+     * @return sessionin id-arvo
+     */
     protected int haeIdSessionilta(HttpServletRequest request) {
         return (Integer) request.getSession().getAttribute("id");
     }
     
     /**
-     * Hakee id-parametria vastaavan arvon.
+     * Palauttaa id-parametria vastaavan arvon.
      */ 
     protected int haeIdParametrina(HttpServletRequest request) {
         return palautaArvo(request.getParameter("id"));
@@ -148,6 +136,12 @@ public class YleisServlet extends HttpServlet {
         return id;
     }
     
+    /**
+     * Palauttaa parametrina annetun parametrin int-tyyppisenä.
+     * @param param
+     * @param request
+     * @return int parametri
+     */
     protected int haeIntArvo(String param, HttpServletRequest request) {
         return palautaArvo(request.getParameter(param));
     }
@@ -163,6 +157,12 @@ public class YleisServlet extends HttpServlet {
         return arvo;
     }
     
+    /**
+     * Palauttaa parametrina annetun arvon String-tyyppisenä. 
+     * @param param
+     * @param request
+     * @return String parametri
+     */
     protected String haeStringArvo(String param, HttpServletRequest request) {
         return request.getParameter(param);
     }

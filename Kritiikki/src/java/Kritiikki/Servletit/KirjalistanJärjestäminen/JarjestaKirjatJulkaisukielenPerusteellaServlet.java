@@ -24,6 +24,7 @@ public class JarjestaKirjatJulkaisukielenPerusteellaServlet extends YleisServlet
             List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("julkaisukieli");
             request.setAttribute("kirjat", kirjat);
             naytaJSP("etusivu", request, response);
+            return;
         } finally {
             out.close();
         }

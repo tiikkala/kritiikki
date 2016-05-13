@@ -1,5 +1,6 @@
-package Kritiikki.Servletit.Kommentointi;
+package Kritiikki.Servletit.Kommentit;
 
+import Kritiikki.Mallit.Kommentti;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,8 +19,11 @@ public class KommentinPoistoServlet extends YleisServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = luoPrintWriter(response);
         try {
-            int kommenttiId = haeIntArvo("id", request);
-            new Kommentti().
+            int id = haeIntArvo("id", request);
+            new Kommentti().poistaKommentti(id);
+            String sivu = "Kirja?id=" + id;
+            ohjaaSivulle(sivu, response);
+            request.getSession().setAttribute("ilmoitus", "Kommentin poistaminen onnistui.");
         } finally {
             out.close();
         }

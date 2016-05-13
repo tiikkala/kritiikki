@@ -61,6 +61,9 @@ Ylläpitäjä siirtyy vain ylläpitäjän oikeuksilla varustetuille käyttäjill
 - Kirjan/kirjoihin liittyvän tiedon poisto (ylläpitäjä)
 Ylläpitäjä etsii etusivulta kirjan, jonka tietoja hän haluaa muokata. Hän klikkaa kirjaa, jolloin hän siirtyy kirjan tietosivulle. Ylläpitäjällä on tietosivulla näkymässä Poista-nappi, jota klikkaamalla voi poistaa kirja.
 
+- Kommentin/kritiikin poisto (ylläpitäjä):
+Ylläpitäjä klikkailee itsensä kirjan tietosivulle, ja poistaa ruksia painamalla haluamansa kritiikin/kommentin.
+
 #+LATEX: \newpage
 *** Järjestelmän tietosisältö
 
@@ -149,6 +152,14 @@ Pistisiin liittyy automaattisesti generoituva id sekä yksittäistä arviota kuv
 \end{figure}
 #+END_LATEX
 *** Järjestelmän yleisrakenne
+Sovelluksessa on noudatettu MVC-mallia. Mallit ja konrollerit on sijoitettu omiin paketteihinsa, jsp-tieodstoina toteutetu näkymät sijaitsevat web-kansiossa. Tietokantayhteyksien luominen ja palauttaminen tapahtuu Tietokanta-paketissa sijaitsevan Tietokanta-luokan avulla.
+
+Servlettejä on jaoteltu omiin paketteihinsa sen mukaan, mihin ohjelman laajempaan toiminnallisuuskokonaisuuteen ne kuuluvat. Esimerkiksi kijojen lisääminen, muokkaaminen ja poistaminen on paketissa Kirjatoiminnot ja kritiikkien kirjoittaminen, muokkaaminen ja poistaminen on paketissa Kritiikit.
+
+Kaikki Servletit ovat YleisServlet-luokan aliluokkia. YleiseServletistä löytyy yleisesti käytettäviä metodeja esimerkiksi parametrien hakuun requesteilta,  muuttujien arvojen tallentamiseen sessioniin sekä virheilmoitusten toteuttamiseen.
+
+Ohjelman front-end on toteutettu JavaScript-pohjaisella Bootsrap-ympäristöllä, joten se edellyttää, että selaimessa on tuki JavaScriptille.
+
 *** Käyttöliittymä ja järjestelmän komponentit
 **** Sivukartta
 #+BEGIN_LATEX
@@ -160,3 +171,19 @@ Pistisiin liittyy automaattisesti generoituva id sekä yksittäistä arviota kuv
 \end{center}
 \end{figure}
 #+END_LATEX
+
+Sovelluksen ainoa julkinen sivu on kirjautumissivu. Kun käyttäjä kirjautuu sisään, hänet ohajataan etusivulle, jossa näkyy lista palveluun lisätyistä kirjoista ja toimintoja kirjojen etsimiseen ja lisäämiseen. Klikkaamalla kirjan nimeä, pääsee kirjan tietosivulle, jossa näkyy kirjaan liittyvät tiedot, kommentit ja kritiikit. Sivun kautta käyttäjä voi myös itse kirjoitta kritiikkejä ja kommentteja. Navigaatiopalkin avulla voi siirtyä etusivulta profiilisivulle (ja Uutiset-sivulle, joka näyttää uusimmat kirjat, kommentit ja kritiikit, kunhan tämä sivu saadaan toteutettua). Ylläpitäjä-roolilla varustettu käyttäjä pääsee navigaatiopalkista myös Käyttäjälistaus-sivulle, jossa hän voi poistaa käyttäjiä ja lisätä heille ylläpito-oikeuksia.
+
+#+BEGIN_LATEX
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=1\textwidth]{/home/tapio/kritiikki/doc/kayttoliittyma.png}
+\end{center}
+\end{figure}
+#+END_LATEX
+*** Asennustiedot
+Ennen sovellusken asennusta on tietokannan yhteystiedostot muutettava oikeaksi tiedostoon web/META-INF/context.xml. Voit kopioida asetustiedoston mallin tiedostosta context.xml.dist. Tämän jälkeen sovellus asennetaan kopioimalla dist-kansiosta Kritiikki.war-tiedosto palvelimen näkyvään hakemistoon. 
+*** Käynnistysohje
+Sovellusta voi kokeilla osoitteessa http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/. Kirjautumissivun kautta on mahdollista rekisteröityä palvelun käyttäjäksi. Admin-tunnukset ovat karikriitikko (käyttäjätunnus), kari1234 (salasana).
+*** Puutteet & jatkokehitys
+
