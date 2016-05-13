@@ -1,4 +1,4 @@
-#+TITLE:  Kritiikki – tietokantasovellus kirja-arvioille
+#+TITLE:  Kritiikki – sovellus lukutoukille
 #+DRAWERS: 
 #+AUTHOR: Tapio Ikkala
 #+OPTIONS: H:5  toc:t  num:t tags:nil
@@ -161,7 +161,6 @@ Kaikki Servletit ovat YleisServlet-luokan aliluokkia. YleiseServletistä löytyy
 Ohjelman front-end on toteutettu JavaScript-pohjaisella Bootsrap-ympäristöllä, joten se edellyttää, että selaimessa on tuki JavaScriptille.
 
 *** Käyttöliittymä ja järjestelmän komponentit
-**** Sivukartta
 #+BEGIN_LATEX
 \begin{figure}[h]
 \begin{center}
@@ -186,4 +185,4 @@ Ennen sovellusken asennusta on tietokannan yhteystiedostot muutettava oikeaksi t
 *** Käynnistysohje
 Sovellusta voi kokeilla osoitteessa http://t-tiikkala.users.cs.helsinki.fi/Kritiikki/. Kirjautumissivun kautta on mahdollista rekisteröityä palvelun käyttäjäksi. Admin-tunnukset ovat karikriitikko (käyttäjätunnus), kari1234 (salasana).
 *** Puutteet & jatkokehitys
-
+Uutiset-sivua ei vielä ole toteutettu, eli siinä on ainakin yksi jatkokehityksen paikka. Sovelluksen sivuilla ei ole myöskään toteutettu minkäänlaista sivutusta, mikä tulee ongelmaksi, kun palvelun sisältämä tieto lisääntyy. Myös sovelluksen ulkoasussa on hiottavaa.
