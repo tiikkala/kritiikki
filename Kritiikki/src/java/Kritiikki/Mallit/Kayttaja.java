@@ -125,7 +125,7 @@ public class Kayttaja extends Kyselytoiminnot {
     }
 
     private boolean onkoTunnusVapaa(String tunnus) {
-        if (etsiKayttajaTunnuksenPerusteella(tunnus) != null) {
+        if (haeKayttajaTunnuksenPerusteella(tunnus) != null) {
             return false;
         }
         return true;
@@ -160,8 +160,26 @@ public class Kayttaja extends Kyselytoiminnot {
             lopeta();
         }
     }
+    
+    public List<Kayttaja> haeHakusanalla(String hakusana) {
+        List<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
+        try {
+            String sql = "SELECT * FROM kayttajat WHERE id ~* '" + hakusana + "'";
+            alustaKysely(sql);
+            suoritaKysely();
+            while (results.next()) {
+                kayttajat.add(palautaKayttaja());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+        return kayttajat;
+    }
 
-    public Kayttaja etsiKayttajaTunnuksenPerusteella(String tunnus) {
+    public Kayttaja haeKayttajaTunnuksenPerusteella(String tunnus) {
         Kayttaja kayttaja = new Kayttaja();
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? LIMIT 1";
@@ -179,7 +197,7 @@ public class Kayttaja extends Kyselytoiminnot {
         return null;
     }
 
-    public Kayttaja etsiKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
+    public Kayttaja haeKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
         try {
             String sql = "SELECT * FROM kayttajat WHERE id = ? AND salasana = ? LIMIT 1";
             alustaKysely(sql);
@@ -200,7 +218,7 @@ public class Kayttaja extends Kyselytoiminnot {
     public List<Kayttaja> getKayttajat() {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
         try {
-            String sql = "SELECT id, salasana, sposti FROM kayttajat";
+            String sql = "SELECT id, salasana, sposti, rooli FROM kayttajat";
             alustaKysely(sql);
             suoritaKysely();
             while (results.next()) {

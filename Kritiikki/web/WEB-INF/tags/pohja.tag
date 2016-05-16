@@ -38,8 +38,9 @@
                         <li <c:if test="${pageTitle eq 'Uutiset'}">class="active"</c:if>><a href="#">Uutiset</a></li>
                         <li <c:if test="${pageTitle eq 'Profiili'}">class="active"</c:if>><a href="/Kritiikki/Profiili">Profiili</a></li>
                         <li <c:if test="${pageTitle eq 'Kayttäjatiedot'}">class="active"</c:if>><a href="/Kritiikki/Kayttajatiedot">Käyttäjätiedot</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                            <c:if test="${kirjautunut.rooli eq 'yllapitaja'}">
+                            <li <c:if test="${pageTitle eq 'Kayttajalista'}">class="active"</c:if>><a href="/Kritiikki/Kayttajalista">Käyttäjälista</a></li>
+                            </c:if>
                         <li><a href="/Kritiikki/Uloskirjautuminen"><span class="glyphicon glyphicon-log-out"></span>Kirjaudu ulos</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->

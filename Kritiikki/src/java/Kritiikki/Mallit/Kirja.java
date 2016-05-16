@@ -29,7 +29,7 @@ public class Kirja extends Kyselytoiminnot {
     public int getId() {
         return this.id;
     }
-    
+
     public Date getDate() {
         return this.paivays;
     }
@@ -57,7 +57,7 @@ public class Kirja extends Kyselytoiminnot {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public void setDate(Date paivays) {
         this.paivays = paivays;
     }
@@ -417,7 +417,10 @@ public class Kirja extends Kyselytoiminnot {
                     + "LEFT OUTER JOIN (SELECT kirjaId, AVG(pisteet) AS pisteet FROM "
                     + "pisteet GROUP BY kirjaId) AS pisteet ON kirjat.id = pisteet.kirjaId "
                     + "WHERE kirjat.nimi ~* '" + hakusana + "' OR kirjat.kirjailija ~* '"
-                    + hakusana + "' GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, "
+                    + hakusana + "' OR kirjat.suomentaja ~* '" + hakusana + "'"
+                    + " OR kirjat.julkaisukieli ~* '" + hakusana + "' "
+                    + "OR to_char(kirjat.julkaisuvuosi, '9999') ~* '" + hakusana
+                    + "'  GROUP BY kirjat.id, kirjat.nimi, kirjat.kirjailija, "
                     + "kirjat.julkaisuvuosi, kirjat.julkaisukieli, kirjat.suomentaja, "
                     + "pisteet.kirjaId, pisteet.pisteet ORDER BY pisteet.pisteet DESC NULLS LAST;";
             alustaKysely(sql);

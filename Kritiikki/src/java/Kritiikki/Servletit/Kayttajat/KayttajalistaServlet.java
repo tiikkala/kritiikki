@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Näyttää ylläpitäjäoikeuksin varustetulle käyttäjälle listan käyttäjistä.
  */
-public class KayttajaListausServlet extends YleisServlet {
+public class KayttajalistaServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class KayttajaListausServlet extends YleisServlet {
         try {
             List<Kayttaja> kayttajat = new Kayttaja().getKayttajat();
             request.setAttribute("kayttajat", kayttajat);
-            naytaJSP("kayttajalistaus", request, response);
+            naytaJSP("kayttajalista", request, response);
         } finally {
             out.close();
         }

@@ -105,8 +105,8 @@
         <servlet-class>Kritiikki.Servletit.Kommentit.KommentinMuokkausServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>KayttajaListausServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajaListausServlet</servlet-class>
+        <servlet-name>KayttajalistaServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajalistaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>KayttajatiedotServlet</servlet-name>
@@ -119,6 +119,10 @@
     <servlet>
         <servlet-name>KayttajanPoistoServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajanPoistoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KayttajahakuServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajahakuServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>KirjautuminenServlet</servlet-name>
@@ -225,8 +229,8 @@
         <url-pattern>/KommentinMuokkaus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>KayttajaListausServlet</servlet-name>
-        <url-pattern>/KayttajaListaus</url-pattern>
+        <servlet-name>KayttajalistaServlet</servlet-name>
+        <url-pattern>/Kayttajalista</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>KayttajatiedotServlet</servlet-name>
@@ -239,6 +243,10 @@
     <servlet-mapping>
         <servlet-name>KayttajanPoistoServlet</servlet-name>
         <url-pattern>/KayttajanPoisto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KayttajahakuServlet</servlet-name>
+        <url-pattern>/Kayttajahaku</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
