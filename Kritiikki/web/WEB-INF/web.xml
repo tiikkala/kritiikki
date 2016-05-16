@@ -9,10 +9,6 @@
         <servlet-class>Kritiikki.Servletit.YleisServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>KayttajaListausServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KayttajaListausServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EtusivuServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.EtusivuServlet</servlet-class>
     </servlet>
@@ -54,7 +50,7 @@
     </servlet>
     <servlet>
         <servlet-name>ProfiiliServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.ProfiilinNayttaminen.ProfiiliServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.ProfiiliServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NaytaKayttajanKritiikitServlet</servlet-name>
@@ -66,23 +62,23 @@
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatNimenPerusteellaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatNimenPerusteellaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJarjestaminen.JarjestaKirjatNimenPerusteellaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJarjestaminen.JarjestaKirjatJulkaisuvuodenPerusteellaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatSuomentajanPerusteellaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatSuomentajanPerusteellaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJarjestaminen.JarjestaKirjatSuomentajanPerusteellaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatKirjailijanPerusteellaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatKirjailijanPerusteellaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJarjestaminen.JarjestaKirjatKirjailijanPerusteellaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-name>
-        <servlet-class>Kritiikki.Servletit.KirjalistanJärjestäminen.JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-class>
+        <servlet-class>Kritiikki.Servletit.KirjalistanJarjestaminen.JarjestaKirjatJulkaisukielenPerusteellaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SanahakuServlet</servlet-name>
@@ -108,10 +104,22 @@
         <servlet-name>KommentinMuokkausServlet</servlet-name>
         <servlet-class>Kritiikki.Servletit.Kommentit.KommentinMuokkausServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet>
         <servlet-name>KayttajaListausServlet</servlet-name>
-        <url-pattern>/KayttajaListausServlet</url-pattern>
-    </servlet-mapping>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajaListausServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KayttajatiedotServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajatiedotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KayttajaTietojenMuokkausServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajaTietojenMuokkausServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KayttajanPoistoServlet</servlet-name>
+        <servlet-class>Kritiikki.Servletit.Kayttajat.KayttajanPoistoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>KirjautuminenServlet</servlet-name>
         <url-pattern>/Kirjautuminen</url-pattern>
@@ -215,6 +223,22 @@
     <servlet-mapping>
         <servlet-name>KommentinMuokkausServlet</servlet-name>
         <url-pattern>/KommentinMuokkaus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KayttajaListausServlet</servlet-name>
+        <url-pattern>/KayttajaListaus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KayttajatiedotServlet</servlet-name>
+        <url-pattern>/Kayttajatiedot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KayttajaTietojenMuokkausServlet</servlet-name>
+        <url-pattern>/KayttajaTietojenMuokkaus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KayttajanPoistoServlet</servlet-name>
+        <url-pattern>/KayttajanPoisto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

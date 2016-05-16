@@ -1,60 +1,32 @@
-package Kritiikki.Servletit.Kirjatoiminnot;
+package Kritiikki.Servletit.KirjalistanJarjestaminen;
 
-import Kritiikki.Mallit.Kritiikki;
 import Kritiikki.Mallit.Kirja;
-import Kritiikki.Mallit.Kommentti;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Näyttaa kirjan tiedot ja kirjaan liittyvät kritiikit.
+ * Listaa kirjat nimen perusteella akkostettuna.
  */
-public class KirjaServlet extends YleisServlet {
+public class JarjestaKirjatNimenPerusteellaServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = luoPrintWriter(response);
+        PrintWriter out = response.getWriter();
         try {
-            // haetaan kirjan id
-            int id = haeId(request);
-            Kirja k = new Kirja().haeKirjaJaPisteet(id);
-            request.setAttribute("kirja", k);
-            // tallennetaan id sessioniin tulevaa käyttöä varten
-            talletaSessionId(request, id);
-            // haetaan kirjaan liittyvät kritiikit
-            List<Kritiikki> kritiikit = new Kritiikki().haeKritiikitKirjaIdPerusteella(id);
-            // haetaan kritiikkeihin liittyvät kommentit
-            Map<Integer, List<Kommentti>> kommentit = haeKritiikkeihinLiittyvatKommentit(kritiikit);
-            request.setAttribute("kommentit", kommentit);
-            request.setAttribute("kritiikit", kritiikit);
-            paivitaIlmoitus(request);
-            naytaJSP("kirja", request, response);
+            Kirja kirja = new Kirja();
+            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("nimi");
+            request.setAttribute("kirjat", kirjat);
+            naytaJSP("etusivu", request, response);
         } finally {
             out.close();
         }
-    }
-
-    /**
-     * Metodi luo hajautustaulun, jossa on avaimena kritiikin id ja arvona lista
-     * kritiikkiin liittyvistä kommenteista.
-     *
-     * @param kritiikit = lista kritiikeistä
-     * @return kommentit = kritiikkeihin liittyvät kommentit
-     */
-    private Map<Integer, List<Kommentti>> haeKritiikkeihinLiittyvatKommentit(List<Kritiikki> kritiikit) {
-        Map<Integer, List<Kommentti>> kommentit = new HashMap<Integer, List<Kommentti>>();
-        for (Kritiikki k : kritiikit) {
-            kommentit.put(k.getId(), new Kommentti().haeKritiikkiinLittyvatKommentit(k.getId()));
-        }
-        return kommentit;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

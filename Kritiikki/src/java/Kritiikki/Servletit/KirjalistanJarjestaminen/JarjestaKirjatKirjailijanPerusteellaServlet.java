@@ -1,4 +1,4 @@
-package Kritiikki.Servletit.KirjalistanJärjestäminen;
+package Kritiikki.Servletit.KirjalistanJarjestaminen;
 
 import Kritiikki.Mallit.Kirja;
 import Kritiikki.Servletit.YleisServlet;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Listaa kirjat suomentajan perusteella akkostettuna.
+ * Järjestää kirjat kirjailijan perusteella aakkostettuna.
  */
-public class JarjestaKirjatSuomentajanPerusteellaServlet extends YleisServlet {
+public class JarjestaKirjatKirjailijanPerusteellaServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,7 +21,7 @@ public class JarjestaKirjatSuomentajanPerusteellaServlet extends YleisServlet {
         PrintWriter out = response.getWriter();
         try {
             Kirja kirja = new Kirja();
-            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("suomentaja");
+            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("kirjailija");
             request.setAttribute("kirjat", kirjat);
             naytaJSP("etusivu", request, response);
         } finally {

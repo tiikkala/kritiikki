@@ -1,6 +1,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<t:pohja pageTitle="Etusivu">    
+<t:pohja pageTitle="Profiili">    
     <c:if test ="${kirjautunut == null}">
         <jsp:forward page="OhjaaKirjautumiseen"></jsp:forward>
     </c:if>

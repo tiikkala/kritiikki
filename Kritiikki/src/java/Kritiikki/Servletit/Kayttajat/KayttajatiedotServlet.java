@@ -1,29 +1,26 @@
-package Kritiikki.Servletit.KirjalistanJärjestäminen;
+package Kritiikki.Servletit.Kayttajat;
 
-import Kritiikki.Mallit.Kirja;
+import Kritiikki.Mallit.Kayttaja;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Järjestää kirjat kirjailijan perusteella aakkostettuna.
+ *
+ * @author tapio
  */
-public class JarjestaKirjatKirjailijanPerusteellaServlet extends YleisServlet {
+public class KayttajatiedotServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Kirja kirja = new Kirja();
-            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaParametrinaAnnetunAttribuutinPerusteella("kirjailija");
-            request.setAttribute("kirjat", kirjat);
-            naytaJSP("etusivu", request, response);
+            naytaJSP("kayttajatiedot", request, response);
         } finally {
             out.close();
         }

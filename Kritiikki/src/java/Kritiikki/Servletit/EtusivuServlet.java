@@ -22,9 +22,7 @@ public class EtusivuServlet extends YleisServlet {
             paivitaIlmoitus(request);
             naytaJSP("etusivu", request, response);
         } finally {
-            {
-                out.close();
-            }
+            out.close();
         }
     }
 

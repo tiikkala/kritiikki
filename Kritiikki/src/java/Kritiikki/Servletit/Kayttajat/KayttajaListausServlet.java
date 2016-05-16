@@ -1,7 +1,6 @@
-package Kritiikki.Servletit.KirjalistanJärjestäminen;
+package Kritiikki.Servletit.Kayttajat;
 
-import Kritiikki.Mallit.Kirja;
-import Kritiikki.Servletit.YleisServlet;
+import Kritiikki.Mallit.Kayttaja;
 import Kritiikki.Servletit.YleisServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,19 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Listaa kirjat julkaisuvuoden perusteella laksevassa järjestyksessä.
+ * Näyttää ylläpitäjäoikeuksin varustetulle käyttäjälle listan käyttäjistä.
  */
-public class JarjestaKirjatJulkaisuvuodenPerusteellaServlet extends YleisServlet {
+public class KayttajaListausServlet extends YleisServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        PrintWriter out = luoPrintWriter(response);
         try {
-            Kirja kirja = new Kirja();
-            List<Kirja> kirjat = kirja.haeKirjatJaJarjestaJulkaisuvuodenPeursteella();
-            request.setAttribute("kirjat", kirjat);
-            naytaJSP("etusivu", request, response);
+            List<Kayttaja> kayttajat = new Kayttaja().getKayttajat();
+            request.setAttribute("kayttajat", kayttajat);
+            naytaJSP("kayttajalistaus", request, response);
         } finally {
             out.close();
         }

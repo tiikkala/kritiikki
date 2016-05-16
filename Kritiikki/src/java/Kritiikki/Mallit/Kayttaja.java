@@ -1,9 +1,5 @@
 package Kritiikki.Mallit;
 
-import Kritiikki.Tietokanta.Tietokanta;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,6 +131,36 @@ public class Kayttaja extends Kyselytoiminnot {
         return true;
     }
 
+    public void poistaKayttaja(String id) {
+        try {
+            String sql = "DELETE FROM kayttajat WHERE id = ? RETURNING id";
+            alustaKysely(sql);
+            statement.setString(1, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
+
+    public void muutaTietoja(String salasana, String sposti, String id) {
+        try {
+            String sql = "UPDATE kayttajat SET salasana = ?, sposti = ? WHERE id = ? RETURNING id";
+            alustaKysely(sql);
+            statement.setString(1, salasana);
+            statement.setString(2, sposti);
+            statement.setString(3, id);
+            suoritaKysely();
+        } catch (SQLException e) {
+            Logger.getLogger(Kayttaja.class
+                    .getName()).log(Level.SEVERE, null, e);
+        } finally {
+            lopeta();
+        }
+    }
+
     public Kayttaja etsiKayttajaTunnuksenPerusteella(String tunnus) {
         Kayttaja kayttaja = new Kayttaja();
         try {
@@ -143,14 +169,14 @@ public class Kayttaja extends Kyselytoiminnot {
             statement.setString(1, tunnus);
             suoritaKysely();
             if (results.next()) {
-                kayttaja = palautaKayttaja();
+                return palautaKayttaja();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lopeta();
         }
-        return kayttaja;
+        return null;
     }
 
     public Kayttaja etsiKayttajaTunnuksenJaSalasananPeruseella(String tunnus, String salasana) {
@@ -171,34 +197,19 @@ public class Kayttaja extends Kyselytoiminnot {
         return null;
     }
 
-    public static List<Kayttaja> getKayttajat() throws SQLException {
-
-        String sql = "SELECT id, salasana, sposti FROM kayttajat";
-        Connection yhteys = Tietokanta.getYhteys();
-        PreparedStatement kysely = yhteys.prepareStatement(sql);
-        ResultSet tulokset = kysely.executeQuery();
-
+    public List<Kayttaja> getKayttajat() {
         ArrayList<Kayttaja> kayttajat = new ArrayList<Kayttaja>();
-        while (tulokset.next()) {
-            //Luodaan tuloksia vastaava olio ja palautetaan olio:
-            Kayttaja k = new Kayttaja();
-            k.setId(tulokset.getString("id"));
-            k.setSalasana(tulokset.getString("salasana"));
-            k.setSposti(tulokset.getString("sposti"));
-            kayttajat.add(k);
-        }
-        //Suljetaan kaikki resutuloksetsid:
         try {
-            tulokset.close();
-        } catch (Exception e) {
-        }
-        try {
-            kysely.close();
-        } catch (Exception e) {
-        }
-        try {
-            yhteys.close();
-        } catch (Exception e) {
+            String sql = "SELECT id, salasana, sposti FROM kayttajat";
+            alustaKysely(sql);
+            suoritaKysely();
+            while (results.next()) {
+                kayttajat.add(palautaKayttaja());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lopeta();
         }
         return kayttajat;
     }
