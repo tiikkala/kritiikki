@@ -9,7 +9,7 @@
 *** Johdanto
 Kritiikki-kirja-arviosovellus on esimerkiksi kirjallisuudesta kiinnostuneen kaveriporukan käyttöön suunniteltu sovellus, jonka avulla on helppo jakaa tietoa siitä, mitä kukin on lukenut ja pitänyt lukemastaan. 
 
-Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcatin avulla. Sovellus toteutetaan Javalla ja tietokantakielenä käytetään PostgreSQL:ää.
+Sovellus toteutetaan web-sovelluksena laitoksen users-palvelimella Apache Tomcatin avulla. Sovellus toteutetaan Javalla, ja tietokantakielenä käytetään PostgreSQL:ää.
 *** Yleiskuva järjestelmästä
 Järjestelmässä on kaksi käyttäjätyyppiä: tavallinen käyttäjä ja ylläpitäjä. Tavallisen käyttäjän oikeuksien lisäksi ylläpitäjällä on oikeus poistaa muiden käyttäjien tilejä sekä kirjoihin liittyviä tietoja. 
 
@@ -41,7 +41,7 @@ Palveluun vielä rekisteröitymätön käyttäjä klikkaa kirjautumissivun Rekis
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Hän painaa etusivulla sijaitsevaa Lisää-nappia, joka vie hänet lomakesivulle, jolla kirjan lisääminen tapahtuu. Käyttäjä syötää kirjan ja kirjalijan nimen, ilmestymisvuoden, ilmestymiskielen, kustantajan ja sivunumeron. Halutessan käyttäjä voi antaa kirjalle myös numeroavosanan asteikolla 4-10,  kirjoittaa siitä kritiikin ja ladata järjestelmään kirjan kasikuvan.
 
 - Kirjan tietojen muokkaus:
-Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Hän klikkaa kirjalistasta kirjaa, jonka tietoja hän haluaa muokata (esim. korjata väärän vuosiluvun oikeaksi). Klikkaus avaa kirjan tietosivun, jolla tietoja on mahdollista muokata. Käyttäjä painaa 
+Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Hän klikkaa kirjalistasta kirjaa, jonka tietoja hän haluaa muokata (esim. korjata väärän vuosiluvun oikeaksi). Klikkaus avaa kirjan tietosivun, jolla tietoja on mahdollista muokata.
 
 - Kirjan arviointi:
 Käyttäjä kirjautuu palveluun omilla tunnuksillaan. Käyttäjä hakee järjestelmästä kirjan, jonka hän haluaa arvioida. Klikkaamalla kirjaa hän vie itsensä sivulle, joka näyttää kirjaan liittyvät tiedot ja mahdollistaa numeroarvosanana välillä 4-10 syöttämisen, jos käyttäjä ei vielä ole arvioinut kirjaa.
@@ -152,11 +152,11 @@ Pistisiin liittyy automaattisesti generoituva id sekä yksittäistä arviota kuv
 \end{figure}
 #+END_LATEX
 *** Järjestelmän yleisrakenne
-Sovelluksessa on noudatettu MVC-mallia. Mallit ja konrollerit on sijoitettu omiin paketteihinsa, jsp-tieodstoina toteutetu näkymät sijaitsevat web-kansiossa. Tietokantayhteyksien luominen ja palauttaminen tapahtuu Tietokanta-paketissa sijaitsevan Tietokanta-luokan avulla.
+Sovelluksessa on noudatettu MVC-mallia. Mallit ja konrollerit on sijoitettu omiin paketteihinsa, ja jsp-tieodstoina toteutetu näkymät sijaitsevat web-kansiossa. Tietokantayhteyksien luominen ja palauttaminen tapahtuu Tietokanta-paketissa sijaitsevan Tietokanta-luokan avulla.
 
-Servlettejä on jaoteltu omiin paketteihinsa sen mukaan, mihin ohjelman laajempaan toiminnallisuuskokonaisuuteen ne kuuluvat. Esimerkiksi kijojen lisääminen, muokkaaminen ja poistaminen on paketissa Kirjatoiminnot ja kritiikkien kirjoittaminen, muokkaaminen ja poistaminen on paketissa Kritiikit.
+Servlettejä on jaoteltu omiin paketteihinsa sen mukaan, mihin ohjelman laajempaan toiminnallisuuteen ne kuuluvat. Esimerkiksi kijojen lisääminen, muokkaaminen ja poistaminen on paketissa Kirjatoiminnot, ja kritiikkien kirjoittaminen, muokkaaminen ja poistaminen on paketissa Kritiikit.
 
-Kaikki Servletit ovat YleisServlet-luokan aliluokkia. YleiseServletistä löytyy yleisesti käytettäviä metodeja esimerkiksi parametrien hakuun requesteilta,  muuttujien arvojen tallentamiseen sessioniin sekä virheilmoitusten toteuttamiseen.
+Kaikki Servletit ovat YleisServlet-luokan aliluokkia. YleiseServletistä löytyy yleisesti käytettäviä metodeja esimerkiksi parametrien hakuun palveupyynnöiltä, attribuuttienn tallentamiseen istuntoon sekä virheilmoitusten näyttämiseen.
 
 Ohjelman front-end on toteutettu JavaScript-pohjaisella Bootsrap-ympäristöllä, joten se edellyttää, että selaimessa on tuki JavaScriptille.
 
