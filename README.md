@@ -8,8 +8,8 @@ Sovellus on toteutett web-sovelluksena Helsingin yliopiston tietojenkäsittelyti
 
 - [Sovelluksen kirjautumissivu](http://t-tiikkala.users.cs.helsinki.fi/Kritiikki)
 
-- Testitunnus: seppo1234
-- Salasana: sepisepi
+- Testitunnus: sepisepi
+- Salasana: seppo1234
 
 - [ConnectionTest-testisovellus](http://t-tiikkala.users.cs.helsinki.fi/ConnectionTest/)
 
